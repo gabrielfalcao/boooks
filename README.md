@@ -1,49 +1,40 @@
 # Boooks
 
-[![Build Status](https://travis-ci.org/weedlabs/boooks.png?branch=master)](https://travis-ci.org/weedlabs/boooks)
-
-Flask application scaffolding, modularized and 100% covered by unit
-and functional tests; ready for extreme programming.
-
-## Features
-
-* SQLAlchemy support
-* Simple ORM
-* Command-line helpers through [flask-script](http://flask-script.readthedocs.org/)
-* Easily create **application modules** *(analog to django apps)* through blueprints.
-* WSGI container that sets up the plugins and blueprints
-* Unique test DSL that looks turns writing tests into a more pleasant experience.
-* Documentation support through [markment](http://falcao.it/markment)
+## Running
 
 
-## Getting Started in 5 steps
+Ensure that you have python 2.7
 
- 1. Fork the project
- 2. Clone from your own copy
- 3. Run the `install-wizard.sh` script, which will install the dependencies in your environment
- 4. Run the tests to make sure everything went well
- 5. Disco!
-
-## Bonus: Demo site
-
- 1. Install [NPM](http://npmjs.org)
 
 ```bash
-npm install bower
-```
-
- 2. Download and copy static files
-
-```bash
-make static
-```
-
- 3. Run the server
-
-```bash
+pip install -U pip distribute virtualenvwrapper
+pip install -r development.txt
+python manage.py assets build
 make run
 ```
 
- 4. Disco!
+## Deploying
 
-![screenshot.png](screenshot.png)
+First, ensure that you have amazon credentials and github token and that those are exported as environment variables:
+
+```bash
+export AWS_ACCESS_KEY_ID="yourkeyid"
+export AWS_SECRET_ACCESS_KEY="yoursecretkey"
+export GITHUB_TOKEN="toktoktok"
+```
+
+Then make sure that you edit the file `deploy/vpcs/boooks.yml` and change the value under `ansible_roles_path` to the path where you cloned the boooks repository plus `/deploy`
+
+Last thing, ensure that you have the ssh key `weedlabs-master.pem` at `~/.ssh`
+
+```bash
+cd deploy
+floresta vpcs/boooks.yml --yes --ensure-vpc --inventory-path="inventory" --ansible -vvvv -M library -u ubuntu --extra-vars='{"github_token":"$(GITHUB_TOKEN)","AWS_ACCESS_KEY_ID":"$(AWS_ACCESS_KEY_ID)","AWS_SECRET_ACCESS_KEY":"$(AWS_SECRET_ACCESS_KEY)"}'
+```
+
+### Listing machines
+
+```bash
+cd deploy
+floresta vpcs/boooks.yml --list-machines
+```

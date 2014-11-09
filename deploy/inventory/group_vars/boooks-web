@@ -1,0 +1,43 @@
+# -*- Mode: Yaml -*-;
+---
+redis_bind: 127.0.0.1
+redis_install_dir: "/srv/redis"
+
+postgresql_version: 9.3
+postgresql_encoding: 'UTF-8'
+postgresql_locale: 'en_US.UTF-8'
+
+postgresql_admin_user: "postgres"
+postgresql_default_auth_method: "trust"
+
+postgresql_cluster_name: "main"
+postgresql_cluster_reset: false
+
+postgresql_databases:
+  - name: boooks
+    hstore: no
+
+
+postgresql_users:
+  - name: "boooks"
+    pass: "b000ks"
+    encrypted: no
+
+postgresql_user_privileges:
+  - name: boooks
+    db: boooks
+    priv: "ALL"
+
+
+user: "ubuntu"
+domain: boooks.me
+
+environment_name: "development"
+
+SQLALCHEMY_DATABASE_URI: "postgresql+psycopg2://boooks:b000ks@localhost:5432/boooks"
+REDIS_URI: "redis://localhost:6379"
+BOOOKS_ENVIRONMENT: "development"
+
+AWS_DEFAULT_REGION: "us-east-1"
+
+backup_folder_path: "/srv/backups"

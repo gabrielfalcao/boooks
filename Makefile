@@ -2,6 +2,8 @@ all: test
 
 export SQLALCHEMY_DATABASE_URI:=mysql://root@localhost/boooks_db_local
 
+.PHONY: deploy
+
 test: unit functional
 
 prepare:
@@ -51,3 +53,6 @@ prod-simulation:
 static:
 	bower install
 	python manage.py assets build
+
+deploy:
+	cd deploy && floresta vpcs/boooks.yml --yes --inventory-path="inventory" --ansible -vvvv -M library -u ubuntu --extra-vars='{"github_token":"$(GITHUB_TOKEN)","AWS_ACCESS_KEY_ID":"$(AWS_ACCESS_KEY_ID)","AWS_SECRET_ACCESS_KEY":"$(AWS_SECRET_ACCESS_KEY)"}'

@@ -1,0 +1,11 @@
+repository_name: boooks
+repository_version: master
+application_name: boooks
+application_path: /srv/boooks/src
+launchpad_path: /srv/boooks/launchpad
+application_conf_path: /srv/boooks/etc
+virtualenv_path: /srv/boooks/venv
+boooks_port_number: 4200
+s3_postgres_backup_conf_path: /srv/boooks/etc/backup.conf.sh
+s3_backup_bucket_name: "weedlabs_{{ environment_name }}_backups"
+backup_folder_path: "/srv/backups"

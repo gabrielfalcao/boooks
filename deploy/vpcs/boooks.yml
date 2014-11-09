@@ -1,0 +1,77 @@
+vpc:
+  name: boooks
+  cidr: 10.0.0.0/16
+
+  region: us-east-1
+  availability_zone: us-east-1b
+  hosted_zone_id: ZEPX1Q8LGM34G
+
+  ansible_groups:
+    boooks:
+      - boooks-web
+
+  security:
+    keypair: weedlabs-master
+    private_key_location: ~/.ssh/weedlabs-master.pem
+
+  tiers:
+    - name: web
+      cidr: 10.0.0.0/24
+      public: yes
+      firewall:
+        outbound:
+          - destination: 0.0.0.0/0
+            protocol: TCP
+            port: 80
+            label: HTTP out
+
+          - destination: 0.0.0.0/0
+            protocol: TCP
+            port: 443
+            label: HTTPS out
+
+          - destination: 0.0.0.0/0
+            protocol: TCP
+            port: 22
+            label: SSH out
+
+
+        inbound:
+          - source: 0.0.0.0/0
+            protocol: TCP
+            port: 22
+            label: SSH from anywhere
+
+          - source: 0.0.0.0/0
+            protocol: TCP
+            port: 443
+            label: HTTPS in
+
+          - source: 0.0.0.0/0
+            protocol: TCP
+            port: 80
+            label: HTTP in
+
+
+  machines:
+    - name: boooks-web
+      domain: boooks.me
+      ami-id: ami-e84d8480
+      user: ubuntu
+      instance-type: m1.small
+      tier: web
+      public: yes
+      ansible_roles_path: ~/projects/personal/boooks/deploy
+      ansible:
+        sudo: yes
+        user: "ubuntu"
+        remote_user: "ubuntu"
+
+        roles:
+          - base/common
+          - base/ntp
+          - base/postgres
+          - base/redis
+          - base/nginx
+          - base/supervisor
+          - apps/boooks

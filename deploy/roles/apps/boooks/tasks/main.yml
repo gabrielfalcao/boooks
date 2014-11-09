@@ -1,0 +1,54 @@
+- include: nginx.yml
+
+- name: ensure we have an ssh key for boooks
+  command: ssh-keygen -b 4096 -t rsa -f /root/.ssh/{{ ansible_hostname }}-boooks-rsa -P ""
+           creates=/root/.ssh/{{ ansible_hostname }}-boooks-rsa
+
+- name: upload the deploy key for boooks
+  command: github-tool --token={{ github_token }} add --project-name=boooks --key-title="{{ ansible_hostname }}-boooks" --key-file=/root/.ssh/{{ ansible_hostname }}-boooks-rsa.pub
+
+- name: ensure we have the most updated version of the software from git
+  git: repo="git@github.com:weedlabs/boooks.git"
+       dest="{{ application_path }}" accept_hostkey=True
+       version="{{ repository_version }}"
+       key_file=/root/.ssh/{{ ansible_hostname }}-boooks-rsa
+
+- name: place ssh config for github
+  template: src=ssh_config dest="/root/.ssh/config"
+    owner=root group=root mode=0644
+
+- include: python.yml
+
+- name: place alembic config
+  template: src=alembic.ini dest="{{ application_path }}/alembic.ini"
+    owner=root group=root mode=0644
+
+- name: clear pyc files
+  shell: find /srv/{{ application_name }} -name '*.pyc' -delete
+  tags:
+    - refresh
+
+- name: place a handy shell script
+  template: src=shell-helper dest=/srv/shell-helper
+    owner=root group=root mode=0644
+  tags:
+    - refresh
+
+- name: ensure that flask is configured
+  template: src=supervisor.boooks.conf dest=/etc/supervisor/conf.d/web.{{ application_name }}.conf
+    owner=root group=root mode=0644
+  tags:
+    - supervisor
+    - refresh
+
+- name: ensure flask is running
+  supervisorctl: name="boooks" state=restarted
+  tags:
+    - refresh
+
+- name: setup log rotation
+  template: src=logrotate.conf dest="/etc/logrotate.d/{{ application_name }}"
+    owner=root group=root mode=0644
+
+- name: restart redis
+  service: name=redis_{{ redis_port }} state=started
