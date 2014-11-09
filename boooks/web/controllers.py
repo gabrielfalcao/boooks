@@ -45,3 +45,8 @@ def inject_basics():
 @module.route('/')
 def index():
     return render_template('index.html')
+
+
+@module.route('/reading-lists')
+def reading_lists():
+    return render_template('reading_lists.html')
