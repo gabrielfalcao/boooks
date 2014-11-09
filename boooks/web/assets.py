@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals, absolute_import
-
+import os
 from flask.ext.assets import (
     Bundle,
 )
 from flask import url_for
-from webassets.filter.cssrewrite import CSSRewrite
+from webassets.filter import get_filter
+
 from webassets.filter.jinja2 import Jinja2
-from boooks.base.assets import angular, bootstrap_js, bootstrap_css
 from boooks import settings
 from plant import Node
 
@@ -25,19 +25,18 @@ JINJA_FILTER = Jinja2(context={
     'angular_template': lambda path: static_url("templates/{0}".format(path)),
 })
 
-jquery_js = Bundle("vendor/jquery/dist/jquery.js")
-web_scripts = Bundle(
-    'js/app.*.js', 'js/app.js', filters=JINJA_FILTER)
+os.environ['SASS_PATH'] = ":".join([
+    settings.LOCAL_FILE('static/vendor/foundation/scss/'),
+])
 
-
-CSS_FONT_REWRITE = CSSRewrite(replace={
-    '../fonts/': settings.FONT_AWESOME_PATH,
-    '/static/fonts/': settings.FONT_AWESOME_PATH,
+compass = get_filter('compass', config={
+    'project_path': settings.LOCAL_FILE('static/scss/')
 })
 
+
 web_less = Bundle(
-    'less/web.less',
-    filters=('less', JINJA_FILTER)
+    'scss/app.scss',
+    filters=(compass, ),
 )
 
 templates_node = Node(settings.LOCAL_FILE('static/js/templates'))
@@ -45,15 +44,10 @@ nodes = templates_node.find_with_regex("[.]html$")
 
 
 BUNDLES = [
-    ('css-web', Bundle(bootstrap_css, web_less,
+    ('css-web', Bundle(web_less,
                        output='build/boooks.css')),
-    ('js-web', Bundle(
-        jquery_js,
-        bootstrap_js,
-        angular,
-        web_scripts,
-        output='build/boooks.js')),
 ]
+
 for node in nodes:
     path = node.path.split("/static/js/")[-1]
     source = "/".join(["js", path])

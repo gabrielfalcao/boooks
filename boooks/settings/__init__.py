@@ -75,3 +75,6 @@ GEO_IP_FILE_LOCATION = LOCAL_FILE('data', 'GeoIPCity.dat')
 
 boooks_path = abspath(join(__file__, '..', '..'))
 FONT_AWESOME_PATH = '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/'
+COMPASS_OPTIONS = {
+    'project_path': LOCAL_FILE('boooks/static/')
+}

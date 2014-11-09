@@ -1,34 +1,189 @@
-<!DOCTYPE html>
-<html ng-app="BoooksApp" ng-controller="BoooksMainCtrl">
+<!doctype html>
+<html class="no-js" lang="en" >
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Gabriel Falcao">
-
-    <title>Boooks</title>
-    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,300,500' rel='stylesheet' type='text/css'>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href="{{ static_url('boooks.css') }}" rel="stylesheet">
+    <title>Boooks.</title>
+    <!-- build:css css/libraries.min.css -->
+    <link rel="stylesheet" href="/static/vendor/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/vendor/font-awesome/css/font-awesome.css">
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css css/app.min.css -->
+    <link rel="stylesheet" href="/static/css/app.css">
+    <link rel="stylesheet" href="/static/css/app_override.css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic,700italic|Patrick+Hand+SC|Source+Serif+Pro:400,600,700' rel='stylesheet' type='text/css'>
+    <!-- endbuild -->
+    <!-- build:js js/vendor/modernizr.min.js -->
+    <script src="/static/vendor/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
   </head>
-{% block body %}
   <body>
-<div class="loading" ng-if="loading">
-  <div>
-    <div class="c1"></div>
-    <div class="c2"></div>
-    <div class="c3"></div>
-    <div class="c4"></div>
-  </div>
-  <span>loading</span>
-</div>
-    <div class="container">
-    <navbar></navbar>
-    <div class="row">
-        <div class="col-md-12" ui-view></div>
+
+    <header>
+            <nav class="top-bar" data-topbar role="navigation">
+              <ul class="title-area">
+                <li class="name">
+                  <h1><a href="#" class="logo">Boooks.</a></h1>
+                </li>
+                 <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+                <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+              </ul>
+
+              <section class="top-bar-section">
+                <!-- Right Nav Section -->
+                <ul class="right">
+                  <li class="active"><a href="#">Sign In</a></li>
+                  <li><a href="#">Sign Up</a></li>
+                </ul>
+
+                <!-- Left Nav Section -->
+                <ul class="left">
+                  <li><a href="#">Featured</a></li>
+                  <li><a href="#">Discover</a></li>
+                  <li><a href="readinglists.html">Reading Lists</a></li>
+                </ul>
+              </section>
+            </nav>
+    </header>
+
+    <section role="main" class="body-section">
+
+        <div class="stack">
+            <div class="row filter-feature">
+                <div class="small-12 centered columns">
+
+                   <h2 class="intro">What do you want to read next?</h2>
+
+                    <form id="nl-form" class="nl-form">
+                    I'm looking for
+                    <select>
+                        <option value="1" selected>popular</option>
+                        <option value="2">award-winner</option>
+                        <option value="3">new</option>
+                        <option value="4">classic</option>
+                    </select>
+                    books about
+                    <select>
+                        <option value="1" selected>art & design</option>
+                        <option value="2">technology</option>
+                        <option value="3">environment</option>
+                        <option value="4">gastronomy</option>
+                        <option value="2">history</option>
+                        <option value="2">philosophy</option>
+                    </select>
+                    <br />
+                    under
+                    <select>
+                        <option value="1" selected>$5</option>
+                        <option value="2">$1</option>
+                        <option value="3"$3</option>
+                        <option value="4">$10</option>
+                        <option value="2">$20</option>
+                        <option value="2">$30</option>
+                    </select>
+                    for a
+                    <select>
+                        <option value="1" selected>2 hours</option>
+                        <option value="1">3 hours</option>
+                        <option value="2">5 hours</option>
+                        <option value="3">10 hours</option>
+                        <option value="3">15 hours</option>
+                    </select>
+                    reading in
+                    <select>
+                        <option value="1" selected>english</option>
+                        <option value="1">portuguese</option>
+                        <option value="2">italian</option>
+                        <option value="3">spanish</option>
+                    </select>
+                .
+
+                </form>
+
+
+                </div>
+             </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6">
+                        <li class="book"><a href="" data-reveal-id="myModal"><img src="/static/images/03.jpg" class="th" /></a></li><li class="book"><img src="/static/images/10.jpeg" class="th" /></li><li class="book"><img src="/static/images/15.jpg" class="th" /></li><li class="book"><img src="/static/images/18.jpg" class="th"/></li><li class="book"><img src="/static/images/32.jpg" class="th"/></li><li class="book"><img src="/static/images/31.jpg" class="th"/></li>
+                    </ul>
+                    <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6">
+                        <li class="book"><img src="/static/images/01.jpg" class="th" /></li><li class="book"><img src="/static/images/11.jpg" class="th" /></li><li class="book"><img src="/static/images/07.jpg" class="th" /></li><li class="book"><img src="/static/images/09.jpg" class="th"/></li><li class="book"><img src="/static/images/34.jpeg" class="th"/></li><li class="book"><img src="/static/images/05.jpg" class="th"/></li>
+                    </ul>
+                    <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6">
+                        <li class="book"><img src="/static/images/13.jpg" class="th" /></li><li class="book"><img src="/static/images/14.jpg" class="th" /></li><li class="book"><img src="/static/images/12.jpg" class="th" /></li><li class="book"><img src="/static/images/17.jpg" class="th"/></li><li class="book"><img src="/static/images/33.jpeg" class="th"/></li><li class="book"><img src="/static/images/35.jpeg" class="th"/></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- modal -->
+    <div id="myModal" class="reveal-modal" data-reveal>
+
+        <div class="row book-details">
+            <div class="small-12 large-4 columns">
+
+                <img src="/static/images/03.jpg" />
+
+            </div>
+            <div class="small-12 large-7 columns">
+                 <a class="close-reveal-modal">&#215;</a>
+                 <div class="book-meta">
+                     <h3>Things Come Apart</h3>
+                     <h4 class="author">by Todd McLellan</h4>
+                 </div>
+
+                 <ul class="inline-list avatars">
+                    <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/48.jpg" /></li>
+                    <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/48.jpg" /></li>
+                    <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/chadengle/48.jpg" /></li>
+                    <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/walterstephanie/48.jpg" /></li>
+                    <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/48.jpg" /></li>
+                    <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/mrjohnwalker/48.jpg" /></li>
+                    <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/dakshbhagya/48.jpg" /></li>
+                    <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/48.jpg" /></li>
+                </ul>
+                 <p class="goodreads"><a href="#"><img src="/static/images/goodreads.png" class="goodreads-button" /></a> <span>to see what your friends are reading.</span></p>
+
+                 <p class="book-description">This book makes visible the inner workings of some of the world’s most iconic designs. From SLR camera to mantel clock to espresso machine <a href="#">read more...</a></p>
+                 <a href="#" class="button expand round circle">5$ on Amazon</a>
+            </div>
+        </div>
+        <div class="row similar-books">
+             <div class="small-12 columns">
+                <h6 class="discret-title"> Similar books</h6>
+                <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6">
+                    <li class="book"><img src="/static/images/13.jpg" class="th" /></li><li class="book"><img src="/static/images/14.jpg" class="th" /></li><li class="book"><img src="/static/images/12.jpg" class="th" /></li><li class="book"><img src="/static/images/17.jpg" class="th"/></li><li class="book"><img src="/static/images/33.jpeg" class="th"/></li><li class="book"><img src="/static/images/35.jpeg" class="th"/></li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <script src="{{ static_url('boooks.js') }}"></script>
+
+
+
+    <!-- build:js js/vendor/libraries.min.js -->
+    <!-- bower:js -->
+    <script src="/static/vendor/jquery/dist/jquery.js"></script>
+    <script src="/static/vendor/fastclick/lib/fastclick.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <script src="/static/js/nlform.js"></script>
+    <script>
+        var nlform = new NLForm( document.getElementById( 'nl-form' ) );
+    </script>
+
+    <script src="/static/vendor/foundation/js/foundation.min.js"></script>
+    <script src="/static/vendor/foundation/js/foundation/foundation.reveal.js"></script>
+
+    <!-- endbuild -->
+    <!-- build:js js/app.min.js -->
+    <script src="/static/js/app.js"></script>
+    <!-- endbuild -->
   </body>
-{% endblock %}
 </html>

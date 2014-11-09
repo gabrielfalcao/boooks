@@ -1,0 +1,130 @@
+<!doctype html>
+<html class="no-js" lang="en" >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boooks.</title>
+    <!-- build:css css/libraries.min.css -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css css/app.min.css -->
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/app_override.css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic,700italic|Patrick+Hand+SC|Source+Serif+Pro:400,600,700' rel='stylesheet' type='text/css'>
+    <!-- endbuild -->
+    <!-- build:js js/vendor/modernizr.min.js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+  </head>
+  <body>
+
+    <header>
+            <nav class="top-bar" data-topbar role="navigation">
+              <ul class="title-area">
+                <li class="name">
+                  <h1><a href="index.html" class="logo">Boooks.</a></h1>
+                </li>
+                 <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+                <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+              </ul>
+
+              <section class="top-bar-section">
+                <!-- Right Nav Section -->
+                <ul class="right">
+                  <li class="active"><a href="#">Sign In</a></li>
+                  <li><a href="#">Sign Up</a></li>                
+                </ul>
+
+                <!-- Left Nav Section -->
+                <ul class="left">
+                  <li><a href="#">Featured</a></li>
+                  <li><a href="#">Discover</a></li>
+                  <li><a href="#">Reading Lists</a></li>
+                </ul>
+              </section>
+            </nav>  
+    </header>
+
+    <section role="main" class="body-section">
+
+        <div class="stack">    
+            <div class="row filter-feature">
+                <div class="small-12 centered columns">
+                   
+                   <h3>Reading lists</h3>
+
+                </div>    
+             </div>   
+            <div class="row">
+                <div class="small-12 medium-2 columns">
+                    <div class="list-meta">
+                        <h5>33 Books to open your mind</h5>
+                        <h4 class="author">by Maria Popova</h4>
+                        <img src="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/48.jpg" class="avatar-author"/>
+                    </div>    
+                </div>
+                <div class="small-10 columns">
+                    <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6">
+                        <li class="book"><a href="" data-reveal-id="myModal"><img src="images/21.jpg" class="th" /></a></li><li class="book"><img src="images/22.jpeg" class="th" /></li><li class="book"><img src="images/23.jpeg" class="th" /></li><li class="book"><img src="images/24.jpeg" class="th"/></li><li class="book"><img src="images/25.jpeg" class="th"/></li><li class="book"><img src="images/26.jpeg" class="th"/></li>
+                    </ul>
+                </div>
+                 <hr />
+            </div>
+             <div class="row">
+                <div class="small-12 medium-2 columns">
+                    <div class="list-meta">
+                        <h5>10 Books on How to Live</h5>
+                        <h4 class="author">by Gabriel Falcão</h4>
+                        <img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/48.jpg" class="avatar-author"/>
+                    </div>    
+                </div>
+                <div class="small-10 columns">
+                    <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6">
+                        <li class="book"><a href="" data-reveal-id="myModal"><img src="images/27.jpeg" class="th" /></a></li><li class="book"><img src="images/28.jpeg" class="th" /></li><li class="book"><img src="images/29.jpeg" class="th" /></li><li class="book"><img src="images/30.jpeg" class="th"/></li><li class="book"><img src="images/32.jpg" class="th"/></li><li class="book"><img src="images/31.jpg" class="th"/></li>
+                    </ul>
+                </div>
+                 <hr />
+            </div>  
+           <div class="row">
+                <div class="small-12 medium-2 columns">
+                    <div class="list-meta">
+                        <h5>Design Foundations</h5>
+                        <h4 class="author">by André Cardoso</h4>
+                        <img src="https://s3.amazonaws.com/uifaces/faces/twitter/holdenweb/73.jpg" class="avatar-author"/>
+                    </div>    
+                </div>
+                <div class="small-12 medium-10 columns">
+                    <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6">
+                        <li class="book"><img src="images/01.jpg" class="th" /></li><li class="book"><img src="images/11.jpg" class="th" /></li><li class="book"><img src="images/07.jpg" class="th" /></li><li class="book"><img src="images/09.jpg" class="th"/></li><li class="book"><img src="images/34.jpeg" class="th"/></li><li class="book"><img src="images/05.jpg" class="th"/></li>
+                    </ul>
+                </div>
+                 <hr />
+            </div>                       
+        </div>      
+    </section>
+
+
+    <!-- build:js js/vendor/libraries.min.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <script src="js/nlform.js"></script>
+    <script>
+        var nlform = new NLForm( document.getElementById( 'nl-form' ) );
+    </script>
+
+    <script src="bower_components/foundation/js/foundation.min.js"></script>
+    <script src="js/foundation/foundation.reveal.js"></script>
+
+    <!-- endbuild -->
+    <!-- build:js js/app.min.js -->
+    <script src="js/app.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>
