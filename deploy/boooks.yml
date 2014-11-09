@@ -1,0 +1,15 @@
+---
+- hosts:
+  - 54.173.167.190
+  name: boooks-web
+  remote_user: ubuntu
+  roles:
+  - base/common
+  - base/ntp
+  - base/postgres
+  - base/redis
+  - base/nginx
+  - base/supervisor
+  - apps/boooks
+  sudo: true
+  user: ubuntu
