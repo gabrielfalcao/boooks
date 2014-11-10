@@ -5,6 +5,10 @@
       "subnet": {
         "instance": {
           "name": "web-subnet", 
+          "availability_zone": "us-east-1b", 
+          "region": {
+            "name": "us-east-1"
+          }, 
           "tags": {
             "Tier": "web", 
             "LastFlorestaRun": "2014-11-09T08:11:20.324540", 
@@ -12,13 +16,9 @@
             "Name": "web-subnet", 
             "VPC": "boooks"
           }, 
-          "region": {
-            "name": "us-east-1"
-          }, 
-          "availability_zone": "us-east-1b", 
-          "id": "subnet-5169c226", 
+          "class": "boto.vpc.subnet.Subnet", 
           "cidr_block": "10.0.0.0/24", 
-          "class": "boto.vpc.subnet.Subnet"
+          "id": "subnet-5169c226"
         }, 
         "cidr": "10.0.0.0/24", 
         "name": "web-subnet", 
@@ -75,6 +75,10 @@
         "subnet": {
           "instance": {
             "name": "web-subnet", 
+            "availability_zone": "us-east-1b", 
+            "region": {
+              "name": "us-east-1"
+            }, 
             "tags": {
               "Tier": "web", 
               "LastFlorestaRun": "2014-11-09T08:11:20.324540", 
@@ -82,44 +86,14 @@
               "Name": "web-subnet", 
               "VPC": "boooks"
             }, 
-            "region": {
-              "name": "us-east-1"
-            }, 
-            "availability_zone": "us-east-1b", 
-            "id": "subnet-5169c226", 
+            "class": "boto.vpc.subnet.Subnet", 
             "cidr_block": "10.0.0.0/24", 
-            "class": "boto.vpc.subnet.Subnet"
+            "id": "subnet-5169c226"
           }, 
           "cidr": "10.0.0.0/24", 
           "name": "web-subnet", 
           "availability_zone": "us-east-1b"
         }, 
-        "subnets": [
-          {
-            "instance": {
-              "name": "web-subnet", 
-              "tags": {
-                "Tier": "web", 
-                "LastFlorestaRun": "2014-11-09T08:11:20.324540", 
-                "Role": "Subnet", 
-                "Name": "web-subnet", 
-                "VPC": "boooks"
-              }, 
-              "region": {
-                "name": "us-east-1"
-              }, 
-              "availability_zone": "us-east-1b", 
-              "id": "subnet-5169c226", 
-              "cidr_block": "10.0.0.0/24", 
-              "class": "boto.vpc.subnet.Subnet"
-            }, 
-            "cidr": "10.0.0.0/24", 
-            "name": "web-subnet", 
-            "availability_zone": "us-east-1b"
-          }
-        ], 
-        "name": "web-route-table", 
-        "association": "rtbassoc-2dddbc48", 
         "instance": {
           "routes": [
             {
@@ -135,31 +109,57 @@
               "destination": "0.0.0.0/0"
             }
           ], 
+          "class": "boto.vpc.routetable.RouteTable", 
+          "id": "rtb-c7ad3aa2", 
+          "name": "web-route-table", 
           "tags": {
             "LastFlorestaRun": "2014-11-09T08:11:20.982772", 
             "Tier": "web", 
             "Role": "RouteTable", 
             "Name": "web-route-table", 
             "VPC": "boooks"
-          }, 
-          "class": "boto.vpc.routetable.RouteTable", 
-          "name": "web-route-table", 
-          "id": "rtb-c7ad3aa2"
-        }
+          }
+        }, 
+        "name": "web-route-table", 
+        "association": "rtbassoc-2dddbc48", 
+        "subnets": [
+          {
+            "instance": {
+              "name": "web-subnet", 
+              "availability_zone": "us-east-1b", 
+              "region": {
+                "name": "us-east-1"
+              }, 
+              "tags": {
+                "Tier": "web", 
+                "LastFlorestaRun": "2014-11-09T08:11:20.324540", 
+                "Role": "Subnet", 
+                "Name": "web-subnet", 
+                "VPC": "boooks"
+              }, 
+              "class": "boto.vpc.subnet.Subnet", 
+              "cidr_block": "10.0.0.0/24", 
+              "id": "subnet-5169c226"
+            }, 
+            "cidr": "10.0.0.0/24", 
+            "name": "web-subnet", 
+            "availability_zone": "us-east-1b"
+          }
+        ]
       }, 
       "security_group": {
         "instance": {
-          "class": "boto.ec2.securitygroup.SecurityGroup", 
-          "description": "Tier web security group", 
           "id": "sg-bcedfed9", 
-          "name": "web", 
           "tags": {
             "LastFlorestaRun": "2014-11-09T08:11:21.908519", 
             "Tier": "web", 
             "Role": "SecurityGroup", 
             "Name": "web", 
             "VPC": "boooks"
-          }
+          }, 
+          "class": "boto.ec2.securitygroup.SecurityGroup", 
+          "name": "web", 
+          "description": "Tier web security group"
         }, 
         "outbound_rules": [
           {
@@ -217,18 +217,18 @@
   }, 
   "load_balancers": null, 
   "gateway": {
+    "id": "igw-6d46e208", 
+    "tags": {
+      "Name": "boooks-gateway"
+    }, 
     "attachments": [
       {
         "vpc_id": "vpc-85911ae0", 
         "state": "available"
       }
     ], 
-    "class": "boto.vpc.internetgateway.InternetGateway", 
-    "id": "igw-6d46e208", 
     "name": "boooks-gateway", 
-    "tags": {
-      "Name": "boooks-gateway"
-    }
+    "class": "boto.vpc.internetgateway.InternetGateway"
   }, 
   "machines": [
     {
@@ -236,6 +236,10 @@
       "subnet": {
         "instance": {
           "name": "web-subnet", 
+          "availability_zone": "us-east-1b", 
+          "region": {
+            "name": "us-east-1"
+          }, 
           "tags": {
             "Tier": "web", 
             "LastFlorestaRun": "2014-11-09T08:11:20.324540", 
@@ -243,13 +247,9 @@
             "Name": "web-subnet", 
             "VPC": "boooks"
           }, 
-          "region": {
-            "name": "us-east-1"
-          }, 
-          "availability_zone": "us-east-1b", 
-          "id": "subnet-5169c226", 
+          "class": "boto.vpc.subnet.Subnet", 
           "cidr_block": "10.0.0.0/24", 
-          "class": "boto.vpc.subnet.Subnet"
+          "id": "subnet-5169c226"
         }, 
         "cidr": "10.0.0.0/24", 
         "name": "web-subnet", 
@@ -261,18 +261,18 @@
       "availability_zone": "us-east-1b", 
       "ami-id": "ami-e84d8480", 
       "gateway": {
+        "id": "igw-6d46e208", 
+        "tags": {
+          "Name": "boooks-gateway"
+        }, 
         "attachments": [
           {
             "vpc_id": "vpc-85911ae0", 
             "state": "available"
           }
         ], 
-        "class": "boto.vpc.internetgateway.InternetGateway", 
-        "id": "igw-6d46e208", 
         "name": "boooks-gateway", 
-        "tags": {
-          "Name": "boooks-gateway"
-        }
+        "class": "boto.vpc.internetgateway.InternetGateway"
       }, 
       "hosted_zone_id": "ZEPX1Q8LGM34G", 
       "instance": {
@@ -284,10 +284,10 @@
           "Name": "boooks-web", 
           "VPC": "boooks"
         }, 
-        "id": "i-b7881e5d", 
+        "class": "boto.ec2.instance.Instance", 
         "private_ip_address": "10.0.0.203", 
         "ip_address": "54.173.167.190", 
-        "class": "boto.ec2.instance.Instance"
+        "id": "i-b7881e5d"
       }, 
       "ansible_roles_path": "~/projects/personal/boooks/deploy", 
       "ansible": {
@@ -313,17 +313,17 @@
       "tier": "web", 
       "security_group": {
         "instance": {
-          "class": "boto.ec2.securitygroup.SecurityGroup", 
-          "description": "Tier web security group", 
           "id": "sg-bcedfed9", 
-          "name": "web", 
           "tags": {
             "LastFlorestaRun": "2014-11-09T08:11:21.908519", 
             "Tier": "web", 
             "Role": "SecurityGroup", 
             "Name": "web", 
             "VPC": "boooks"
-          }
+          }, 
+          "class": "boto.ec2.securitygroup.SecurityGroup", 
+          "name": "web", 
+          "description": "Tier web security group"
         }, 
         "outbound_rules": [
           {

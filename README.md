@@ -1,17 +1,28 @@
 # Boooks
 
-## Running
+
+## Preparing the environment
 
 
 Ensure that you have python 2.7
 
 
 ```bash
-pip install -U pip distribute virtualenvwrapper
-pip install -r development.txt
-python manage.py assets build
-make run
+pip install -U pip distribute virtualenvwrapper  # update global dependencies
+mkvirtualenv boooks  # create a virtual env
+pip install -r development.txt  # install project dependencies (local, because are only used by this project)
 ```
+
+## Building assets and running the project
+
+```bash
+workon boooks  # enter the virtual env where all the project dependencies are installed
+python manage.py assets build  # building dependencies
+make run  # running the server on http://localhost:8000
+```
+
+now go to [http://localhost:8000](http://localhost:8000)
+
 
 ## Deploying
 
