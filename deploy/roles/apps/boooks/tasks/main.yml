@@ -4,6 +4,10 @@
   command: ssh-keygen -b 4096 -t rsa -f /root/.ssh/{{ ansible_hostname }}-boooks-rsa -P ""
            creates=/root/.ssh/{{ ansible_hostname }}-boooks-rsa
 
+- name: install bower dependencies
+  shell: bower install
+  chdir: "{{ application_path }}"
+
 - name: upload the deploy key for boooks
   command: github-tool --token={{ github_token }} add --project-name=boooks --key-title="{{ ansible_hostname }}-boooks" --key-file=/root/.ssh/{{ ansible_hostname }}-boooks-rsa.pub
 
