@@ -4,8 +4,11 @@
   command: ssh-keygen -b 4096 -t rsa -f /root/.ssh/{{ ansible_hostname }}-boooks-rsa -P ""
            creates=/root/.ssh/{{ ansible_hostname }}-boooks-rsa
 
+- name: install npm dependencies
+  shell: npm instal -g bower
+
 - name: install bower dependencies
-  shell: bower install
+  shell: bower install --allow-root
   args:
     chdir: "{{ application_path }}"
 

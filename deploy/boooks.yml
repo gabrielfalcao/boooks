@@ -8,6 +8,7 @@
   - base/ntp
   - base/postgres
   - base/redis
+  - base/nodejs
   - base/nginx
   - base/supervisor
   - apps/boooks
