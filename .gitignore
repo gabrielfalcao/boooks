@@ -19,3 +19,5 @@ boooks/static/vendor
 boooks/static/.webassets-cache
 boooks/static/assets.manifest
 makedb.log
+deploy/.cache.boooks.json
+deploy/inventory/boooks.py

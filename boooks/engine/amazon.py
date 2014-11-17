@@ -25,8 +25,8 @@ def format_currency(x):
 
 def get_connection():
     config = {
-        'access_key': os.environ['AWS_ACCESS_KEY_ID'],
-        'secret_key': os.environ['AWS_SECRET_ACCESS_KEY'],
+        'access_key': os.getenv('AWS_ACCESS_KEY_ID'),
+        'secret_key': os.getenv('AWS_SECRET_ACCESS_KEY'),
         'associate_tag': 'boooks06-20',
         'locale': 'us'
     }
