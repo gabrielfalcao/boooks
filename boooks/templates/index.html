@@ -4,7 +4,7 @@
 <section role="main" class="body-section" ng-controller="BoooksSearchController as search">
 
   <div class="stack">
-    <div class="row filter-feature" ng-show="search.books">
+    <div class="row filter-feature" ng-show="search.books" ng-hide="search.loading">
       <div class="small-12 centered columns">
 
         <h2 class="intro">What do you want to read next?</h2>
