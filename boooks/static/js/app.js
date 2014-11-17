@@ -30,12 +30,12 @@ angular.module("BoooksApp", [
     "vr.directives.nlForm"
 ]).config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
-        .state("index", {
-            url: "/index",
+        .state("featured", {
+            url: "/featured",
             templateUrl: "{{ angular_template('index.html') }}",
             controller: "IndexController"
         })
-    $urlRouterProvider.otherwise("index");
+    $urlRouterProvider.otherwise("featured");
 
 }).run(function($rootScope, $state, $templateCache, $http, localStorageService){
     $rootScope.bongAuthToken = localStorageService.get("token");
