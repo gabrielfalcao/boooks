@@ -109,17 +109,37 @@ def set_in_cache(keywords, max_price, data):
 logger = getLogger()
 
 
-def search_for_books(keywords, max_price='30', limit=20):
+def filter_by_reading_time(books, max_pages):
+    if max_pages is None:
+        return books
+    else:
+        return [d for d in books if int(d['number_of_pages'] or 0) < int(max_pages)]
+
+
+def search_for_books(keywords, max_price='30', max_pages=None, limit=20):
     logger.info('keywords %s max_price %s', keywords, max_price)
     data = get_from_cache(keywords, max_price)
     if data:
-        return json.loads(data)
+        return filter_by_reading_time(json.loads(data), max_pages)
 
-    results = api.item_search('Books', Keywords=keywords, IncludeReviewsSummary=True, SearchIndex='Books', MaximumPrice=max_price, ResponseGroup='Images,OfferFull,EditorialReview,ItemAttributes')
+    results = api.item_search(
+        'Books',
+        Keywords=keywords,
+        IncludeReviewsSummary=True,
+        SearchIndex='Books',
+        MaximumPrice=max_price,
+        Sort='reviewrank',
+        ResponseGroup=','.join([
+            'Images',
+            'OfferFull',
+            'EditorialReview',
+            'ItemAttributes',
+        ])
+    )
     data = filter(lambda x: x, [get_item_data(x) for index, x in enumerate(results)])
 
     set_in_cache(keywords, max_price, json.dumps(data, cls=AmazonEncoder))
-    return data
+    return filter_by_reading_time(data, max_pages)
 
 if __name__ == '__main__':
     result = search_for_books('Jill Bolte Taylor')

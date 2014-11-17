@@ -13,7 +13,7 @@ def json_converter(value):
     if isinstance(value, date_types):
         value = value.isoformat()
 
-    return str(value)
+    return unicode(value)
 
 
 def dumps(data, **kw):

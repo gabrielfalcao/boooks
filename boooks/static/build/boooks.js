@@ -30815,12 +30815,13 @@ angular.module("BoooksApp", [
         this.filterKind = 'popular';
         this.filterAbout = 'art & design';
         this.filterMaxPrice = '5';
+        this.filterMaxMinutes = '120';
         this.loading = true;
 
         this.applyFilters = function(){
             controller.filteredBooks = [];
             controller.loading = true;
-            $http.post("http://localhost:8000/api/search", {keywords: [controller.filterKind, controller.filterAbout].join(' '), max_price: controller.filterMaxPrice}).
+            $http.post("http://localhost:8000/api/search", {keywords: [controller.filterKind, controller.filterAbout].join(' '), max_price: controller.filterMaxPrice, max_pages: controller.filterMaxMinutes}).
             success(function(data, status, headers, config) {
                 console.log("data: ", data);
                 controller.books = data;
