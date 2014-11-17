@@ -56,7 +56,7 @@ def inject_basics():
 
 @module.route('/')
 def index():
-    search_for_books('Featured')
+    search_for_books('Popular')
     return render_template('index.html')
 
 
@@ -80,60 +80,6 @@ class RawJSONError(JSONException):
 class ApiResource(JSONResource):
     not_found_msg = "Could not find {0} with kwargs {1}"
 
-    def send_email(self, item):  # pragma: no cover
-        from propellr.api.tasks import send_email_in_background
-        return send_email_in_background.delay(item)
-
-    @property
-    def limit_by(self):
-        limit = request.args.get('limit', None)
-        if limit:
-            return int(limit)
-
-        return
-
-    @property
-    def offset_by(self):
-        offset = request.args.get('offset', 0)
-        if offset:
-            return int(offset)
-
-        return
-
-    def get_user_dict(self, user):
-        data = user.to_dict()
-        data['first_name'] = None
-        data['last_name'] = None
-        data['investor_profile_status'] = INVESTOR_PROFILE_STATUS.INCOMPLETE
-
-        user_info = user.info
-        if user_info:
-            data['first_name'] = user_info.first_name
-            data['last_name'] = user_info.last_name
-            data['investor_profile_status'] = user_info.investor_profile_status
-
-        return data
-
-    def get_model_or_404(self, model_class, **kw):
-        result = model_class.find_one_by(**kw)
-        if not result:
-            msg = self.not_found_msg.format(model_class.__name__, kw)
-            raise JSONNotFound(msg)
-
-        return result
-
-    def get_json_request(self):
-        try:
-            data = json.loads(request.data)
-        except ValueError:
-            logger.exception(
-                "Trying to parse json body in the %s to %s",
-                request.method, request.url,
-            )
-            data = {}
-
-        return data
-
     def parse_json_fields(
             self, fields, validate=True, failure_status_code=400):
 
@@ -153,24 +99,12 @@ class ApiResource(JSONResource):
 
         return result
 
-    def log(self, user_id, action_name, result_name):
-        if settings.TESTING:
-            return
-
-        fmt = "{ip_address} [{method}] url: {url} - uid: %s - %s - %s".format(
-            ip_address=get_ip(),
-            method=request.method,
-            url=request.url,
-        )
-
-        logger.info(fmt, user_id, action_name, result_name)
-
 from boooks.engine.amazon import search_for_books
 
 
 class IndexResource(ApiResource):
     def get(self):
-        result = search_for_books('Featured')
+        result = search_for_books('Popular')
         return json_response(result, 200)
 
 

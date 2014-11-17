@@ -30376,7 +30376,9 @@ angular.module("BoooksApp", [
         var controller = this;
 
         $http.get("http://localhost:8000/api/index").success(function(data, status, headers, config) {
+            console.log("data: ", data);
             controller.books = data;
+
         }).
             error(function(data, status, headers, config) {
                 console.log(data);
