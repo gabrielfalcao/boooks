@@ -49,7 +49,8 @@ angular.module("BoooksApp", [
     })
     .controller("BoooksSearchController", function($scope, $http){
         var controller = this;
-
+        this.filterKind = 'popular';
+        this.filterAbout = 'art & design';
         this.applyFilters = function(){
             $http.post("{{ settings.absurl('/api/search') }}", {keywords: [controller.filterKind, controller.filterAbout].join(' ')}).
             success(function(data, status, headers, config) {
