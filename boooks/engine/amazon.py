@@ -20,7 +20,7 @@ class AmazonEncoder(json.JSONEncoder):
 
 
 def format_currency(x):
-    return "${0}".format(re.sub(r'(\d{2})$', '.\g<1>', x.text))
+    return "{0}".format(re.sub(r'(\d{2})$', '.\g<1>', x.text))
 
 
 def get_connection():
