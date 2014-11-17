@@ -4,7 +4,7 @@
 <section role="main" class="body-section" ng-controller="BoooksSearchController as search">
 
   <div class="stack">
-    <div class="row filter-feature">
+    <div class="row filter-feature" ng-show="search.books">
       <div class="small-12 centered columns">
 
         <h2 class="intro">What do you want to read next?</h2>
@@ -96,7 +96,9 @@
           </div>
         </div>
 
-        <img src="/static/img/loader.git" ng-hide="search.books" />
+        <div ng-hide="search.books">
+          <h2>loading...</h2>
+        </div>
 
         <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6" ng-show="search.books">
           <li ng-repeat="book in search.books" class="book"><a href ng-click="search.showModal(book)"><img src="{{ book.images.medium }}" class="th" /></a></li>
