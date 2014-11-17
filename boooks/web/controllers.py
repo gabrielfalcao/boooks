@@ -124,9 +124,10 @@ class SearchResource(ApiResource):
     def post(self):
         data = self.parse_json_fields([
             'keywords',
+            'max_price'
         ])
 
-        books = search_for_books(keywords=data['keywords'].strip())
+        books = search_for_books(**data)
 
         return json_response(books, 200)
 

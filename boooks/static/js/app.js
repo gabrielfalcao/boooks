@@ -51,15 +51,22 @@ angular.module("BoooksApp", [
         var controller = this;
         this.filterKind = 'popular';
         this.filterAbout = 'art & design';
+        this.filterMaxPrice = '5';
+        this.loading = true;
+
         this.applyFilters = function(){
-            $http.post("{{ settings.absurl('/api/search') }}", {keywords: [controller.filterKind, controller.filterAbout].join(' ')}).
+            controller.filteredBooks = [];
+            controller.loading = true;
+            $http.post("{{ settings.absurl('/api/search') }}", {keywords: [controller.filterKind, controller.filterAbout].join(' '), max_price: controller.filterMaxPrice}).
             success(function(data, status, headers, config) {
                 console.log("data: ", data);
                 controller.books = data;
                 controller.filteredBooks = data;
+                controller.loading = false;
             }).
             error(function(data, status, headers, config) {
                 console.log(data);
+                controller.loading = false;
             });
         };
 
@@ -71,9 +78,11 @@ angular.module("BoooksApp", [
         $http.get("{{ settings.absurl("/api/index") }}").success(function(data, status, headers, config) {
             console.log("data: ", data);
             controller.books = data;
+                controller.loading = false;
             controller.filteredBooks = data;
         }).
         error(function(data, status, headers, config) {
+                controller.loading = false;
             console.log("error: ", data);
         });
 

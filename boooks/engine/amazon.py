@@ -7,6 +7,7 @@ import re
 import json
 
 import redis
+from logging import getLogger
 from amazonproduct import API as AmazonProductApi
 from lxml.objectify import StringElement, IntElement
 
@@ -72,7 +73,7 @@ def get_item_data(item):
             'total_new': item.OfferSummary.TotalNew,
             'total_used': item.OfferSummary.TotalUsed,
             'total_refurbished': item.OfferSummary.TotalRefurbished,
-            'price': hasattr(item.Offers, 'Offer') and item.Offers.Offer.OfferListing.Price.Amount or None,
+            'price': hasattr(item.Offers, 'Offer') and format_currency(item.Offers.Offer.OfferListing.Price.Amount) or None,
         })
 
         if hasattr(item.OfferSummary, 'LowestUsedPrice'):
@@ -89,31 +90,35 @@ def get_item_data(item):
     return data
 
 
-def cache_key(keywords):
-    return ":".join(['cache', keywords])
+def cache_key(keywords, max_price):
+    return ":".join(['cache', keywords, max_price])
 
 
-def get_from_cache(keywords):
+def get_from_cache(keywords, max_price):
     conn = redis.StrictRedis()
-    raw = conn.get(cache_key(keywords))
+    raw = conn.get(cache_key(keywords, max_price))
     if raw:
         return json.loads(raw)
 
 
-def set_in_cache(keywords, data):
+def set_in_cache(keywords, max_price, data):
     conn = redis.StrictRedis()
-    conn.set(cache_key(keywords), json.dumps(data, cls=AmazonEncoder))
+    conn.set(cache_key(keywords, max_price), json.dumps(data, cls=AmazonEncoder))
 
 
-def search_for_books(keywords, limit=20):
-    data = get_from_cache(keywords)
+logger = getLogger()
+
+
+def search_for_books(keywords, max_price='30', limit=20):
+    logger.info('keywords %s max_price %s', keywords, max_price)
+    data = get_from_cache(keywords, max_price)
     if data:
         return json.loads(data)
 
-    results = api.item_search('Books', Keywords=keywords, IncludeReviewsSummary=True, SearchIndex='Books', MaximumPrice='30', ResponseGroup='Images,OfferFull,EditorialReview,ItemAttributes')
-    data = list([get_item_data(x) for index, x in enumerate(results)])
+    results = api.item_search('Books', Keywords=keywords, IncludeReviewsSummary=True, SearchIndex='Books', MaximumPrice=max_price, ResponseGroup='Images,OfferFull,EditorialReview,ItemAttributes')
+    data = filter(lambda x: x, [get_item_data(x) for index, x in enumerate(results)])
 
-    set_in_cache(keywords, json.dumps(data, cls=AmazonEncoder))
+    set_in_cache(keywords, max_price, json.dumps(data, cls=AmazonEncoder))
     return data
 
 if __name__ == '__main__':
