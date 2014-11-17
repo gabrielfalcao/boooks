@@ -9,12 +9,6 @@ from flask.ext.assets import (
     ManageAssets,
 )
 
-from webassets.filter import register_filter
-from webassets_recess import RecessFilter
-
-register_filter(RecessFilter)
-
-
 __all__ = ['AssetsManager']
 
 

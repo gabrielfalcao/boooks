@@ -10,6 +10,7 @@ from webassets.filter import get_filter
 
 from webassets.filter.jinja2 import Jinja2
 from boooks import settings
+from boooks.base.assets import angular
 from plant import Node
 
 static_url = lambda path: "{0}/{1}".format(
@@ -42,10 +43,14 @@ web_less = Bundle(
 templates_node = Node(settings.LOCAL_FILE('static/js/templates'))
 nodes = templates_node.find_with_regex("[.]html$")
 
+booksapp = Bundle('js/app*.js', filters=[JINJA_FILTER])
 
 BUNDLES = [
     ('css-web', Bundle(web_less,
                        output='build/boooks.css')),
+    ('app-js', Bundle(angular, booksapp,
+                      output='build/boooks.js')),
+
 ]
 
 for node in nodes:

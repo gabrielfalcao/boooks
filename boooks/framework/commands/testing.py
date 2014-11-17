@@ -14,16 +14,11 @@ import os
 import re
 import sys
 import subprocess
-import loremipsum
 from flask.ext.script import Command, Option
 
 
 def slugify(string):
     return re.sub(r'\W+', '-', string)
-
-
-def get_paragraphs(number=5):
-    return "\n\n".join(loremipsum.get_paragraphs(number))
 
 
 class RunTest(Command):  # pragma: no cover

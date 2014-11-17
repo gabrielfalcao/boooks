@@ -4,12 +4,12 @@
  *
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
- * 
+ *
  * Copyright 2013, Codrops
  * http://www.codrops.com
  */
 ;( function( window ) {
-	
+
 	'use strict';
 
 	var document = window.document;
@@ -18,7 +18,7 @@
 		String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
 	}
 
-	function NLForm( el ) {	
+	function NLForm( el ) {
 		this.el = el;
 		this.overlay = this.el.querySelector( '.nl-overlay' );
 		this.fields = [];
@@ -37,8 +37,16 @@
 				self.fldOpen++;
 				self.fields.push( new NLField( self, el, 'input', self.fldOpen ) );
 			} );
+                    try {
 			this.overlay.addEventListener( 'click', function(ev) { self._closeFlds(); } );
+                    } catch (e){
+
+                    }
+                    try {
 			this.overlay.addEventListener( 'touchstart', function(ev) { self._closeFlds(); } );
+                    } catch (e){
+
+                    }
 		},
 		_closeFlds : function() {
 			if( this.fldOpen !== -1 ) {
@@ -59,10 +67,10 @@
 	NLField.prototype = {
 		_create : function() {
 			if( this.type === 'dropdown' ) {
-				this._createDropDown();	
+				this._createDropDown();
 			}
 			else if( this.type === 'input' ) {
-				this._createInput();	
+				this._createInput();
 			}
 		},
 		_createDropDown : function() {

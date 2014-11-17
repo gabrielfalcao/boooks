@@ -1,22 +1,14 @@
 <!doctype html>
-<html class="no-js" lang="en" >
+<html ng-app="BoooksApp" ng-controller="BoooksMainCtrl" lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boooks.</title>
-    <!-- build:css css/libraries.min.css -->
     <link rel="stylesheet" href="/static/vendor/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="/static/vendor/font-awesome/css/font-awesome.css">
-    <!-- bower:css -->
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css css/app.min.css -->
     <link rel="stylesheet" href="/static/css/app.css">
     <link rel="stylesheet" href="/static/css/app_override.css">
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic,700italic|Patrick+Hand+SC|Source+Serif+Pro:400,600,700' rel='stylesheet' type='text/css'>
-    <!-- endbuild -->
-    <!-- build:js js/vendor/modernizr.min.js -->
-    <script src="/static/vendor/modernizr/modernizr.js"></script>
     <!-- endbuild -->
   </head>
   <body>
@@ -32,16 +24,15 @@
               </ul>
 
               <section class="top-bar-section">
-                <!-- Right Nav Section -->
+                <!-- Right Nav Section
                 <ul class="right">
                   <li class="active"><a href="#">Sign In</a></li>
                   <li><a href="#">Sign Up</a></li>
                 </ul>
-
+                -->
                 <!-- Left Nav Section -->
                 <ul class="left">
-                  <li><a href="#">Featured</a></li>
-                  <li><a href="#">Discover</a></li>
+                  <li><a href="/">Featured</a></li>
                   <li><a href="/reading-lists">Reading Lists</a></li>
                 </ul>
               </section>
@@ -53,10 +44,11 @@
 
     <!-- build:js js/vendor/libraries.min.js -->
     <!-- bower:js -->
-    <script src="/static/vendor/jquery/dist/jquery.js"></script>
     <script src="/static/vendor/fastclick/lib/fastclick.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+    <script src="/static/vendor/jquery/dist/jquery.js"></script>
+
 
     <script src="/static/js/nlform.js"></script>
     <script>
@@ -65,10 +57,6 @@
 
     <script src="/static/vendor/foundation/js/foundation.min.js"></script>
     <script src="/static/vendor/foundation/js/foundation/foundation.reveal.js"></script>
-
-    <!-- endbuild -->
-    <!-- build:js js/app.min.js -->
-    <script src="/static/js/app.js"></script>
-    <!-- endbuild -->
+    <script src="/static/build/boooks.js"></script>
   </body>
 </html>

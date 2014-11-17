@@ -25,7 +25,7 @@ acceptance:
 shell:
 	python manage.py shell
 
-run:
+run: static
 	python manage.py run
 
 check:

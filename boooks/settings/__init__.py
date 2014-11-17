@@ -26,7 +26,8 @@ SQLALCHEMY_DATABASE_URI = env.get('SQLALCHEMY_DATABASE_URI')
 
 # HTTP
 HOST = env.get("HOST")
-DOMAIN = env.get("DOMAIN")
+DOMAIN = env.get("DOMAIN") or 'localhost:{0}'.format(PORT)
+print "DOMAIN", DOMAIN
 absurl = lambda *path: "{0}{1}/{2}".format(
     SCHEMA, DOMAIN, "/".join(path).lstrip('/'))
 
