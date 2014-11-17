@@ -59,11 +59,5 @@ angular.module("BoooksApp", [
         this.showModal = function(book){
             this.currentBook = book;
             $('#myModal').foundation('reveal', 'open');
-            $http.get("{{ settings.absurl('/api/search') }}").success(function(data, status, headers, config) {
-                controller.books = data;
-            }).
-                error(function(data, status, headers, config) {
-                    alert("error: " + data)
-                });
         };
     });
