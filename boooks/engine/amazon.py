@@ -72,7 +72,7 @@ def get_item_data(item):
             'total_new': item.OfferSummary.TotalNew,
             'total_used': item.OfferSummary.TotalUsed,
             'total_refurbished': item.OfferSummary.TotalRefurbished,
-            'price': item.Offers.Offer.OfferListing.Price.Amount,
+            'price': hasattr(item.Offers, 'Offer') and item.Offers.Offer.OfferListing.Price.Amount or None,
         })
 
         if hasattr(item.OfferSummary, 'LowestUsedPrice'):

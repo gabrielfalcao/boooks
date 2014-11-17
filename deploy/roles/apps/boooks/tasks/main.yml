@@ -13,6 +13,8 @@
   shell: bower install --allow-root
   args:
     chdir: "{{ application_path }}"
+  tags:
+    - refresh
 
 - name: upload the deploy key for boooks
   command: github-tool --token={{ github_token }} add --project-name=boooks --key-title="{{ ansible_hostname }}-boooks" --key-file=/root/.ssh/{{ ansible_hostname }}-boooks-rsa.pub

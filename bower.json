@@ -2,7 +2,7 @@
   "name": "boooks",
   "dependencies": {
     "foundation": "zurb/bower-foundation",
-    "angular-natural-language": "0.1.2",
+    "angular-natural-language": "https://github.com/gabrielfalcao/angular-natural-language.git",
     "angular-local-storage": "0.0.5",
     "angular-ui-router": "~0.2.10",
     "font-awesome": "~4.2.0",
