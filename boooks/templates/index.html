@@ -11,43 +11,33 @@
 
         <form id="nl-form" class="nl-form">
                     I'm looking for
-          <select ng-model="search.filterKind">
-            <option value="popular">popular</option>
-            <option value="award-winning">award-winning</option>
-            <option value="new">new</option>
-            <option value="classic">classic</option>
-          </select>
+          <nl-select
+              value="search.filterKind"
+              ng-click="search.applyFilters()"
+              options="['popular', 'award-winning', 'new', 'classic']">
+          </nl-select>
                     books about
-          <select ng-model="search.filterAbout">
-            <option value="art-and-design">art & design</option>
-            <option value="technology">technology</option>
-            <option value="environment">environment</option>
-            <option value="gastronomy">gastronomy</option>
-            <option value="science">science</option>
-            <option value="history">history</option>
-            <option value="music">music</option>
-          </select>
+          <nl-select
+              ng-click="search.applyFilters()"
+              value="search.filterAbout"
+              options="['art and design', 'technology', 'environment', 'gastronomy', 'science', 'history', 'music']">
+          </nl-select>
           <br />
                     under
-          <select ng-model="search.filterMaxPrice">
-            <option value="5">$5</option>
-            <option value="1">$1</option>
-            <option value="3">$3</option>
-              <option value="10">$10</option>
-              <option value="20">$20</option>
-              <option value="30">$30</option>
-          </select>
+
+          <nl-select
+              value="search.filterMaxPrice"
+              options="[{label: '$5', value: '5'},{label: '$1', value: '1'},{label: '$3', value: '3'},{label: '$10', value: '10'},{label: '$20', value: '20'},{label: '$30', value: '30'}]">
+          </nl-select>
+
                     for a
-          <select ng-model="search.filterMaxMinutes">
-            <option value="120" selected>2 hours</option>
-            <option value="180">3 hours</option>
-            <option value="300">5 hours</option>
-            <option value="600">10 hours</option>
-            <option value="900">15 hours</option>
-          </select>
+
+          <nl-select
+              value="search.filterMaxMinutes"
+              options="[{value: '120', label: '2 hours'},{value: '180', label: '3 hours'},{value: '300', label: '5'},{value: '600', label: '10'},{value: '900', label: '15 hours'}]">
+          </nl-select>
                     reading.
         </form>
-
 
       </div>
     </div>
@@ -83,7 +73,7 @@
               <p class="goodreads"><a href="#"><img src="/static/images/goodreads.png" class="goodreads-button" /></a> <span>to see what your friends are reading.</span></p>
 
               <p class="book-description" ng-bind-html="search.currentBook.review"><a href="#">read more...</a></p>
-              <a ng-href="{{ search.currentBook.url }}" class="button expand round circle">{{ search.currentBook.lowest_new_price_amount}} on Amazon</a>
+              <a ng-href="{{ search.currentBook.url }}" class="button expand round circle">${{ search.currentBook.lowest_new_price_amount}} on Amazon</a>
             </div>
           </div>
           <div class="row similar-books">
@@ -101,7 +91,7 @@
         </div>
 
         <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6" ng-show="search.books">
-          <li ng-repeat="book in search.books" class="book"><a href ng-click="search.showModal(book)"><img src="{{ book.images.medium }}" class="th" /></a></li>
+          <li ng-repeat="book in search.filteredBooks" class="book"><a href ng-click="search.showModal(book)"><img src="{{ book.images.medium }}" class="th" /></a></li>
         </ul>
       </div>
       {% endraw %}

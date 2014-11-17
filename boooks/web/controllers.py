@@ -80,6 +80,18 @@ class RawJSONError(JSONException):
 class ApiResource(JSONResource):
     not_found_msg = "Could not find {0} with kwargs {1}"
 
+    def get_json_request(self):
+        try:
+            data = json.loads(request.data)
+        except ValueError:
+            logger.exception(
+                "Trying to parse json body in the %s to %s",
+                request.method, request.url,
+            )
+            data = {}
+
+        return data
+
     def parse_json_fields(
             self, fields, validate=True, failure_status_code=400):
 

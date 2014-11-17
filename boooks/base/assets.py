@@ -12,9 +12,10 @@ from flask.ext.assets import (
 
 jquery = Bundle('vendor/jquery/jquery.js')
 angular = Bundle(
-    'vendor/angular/angular.js',
+    'vendor/angularjs/angular.js',
     'vendor/angular-ui-router/release/angular-ui-router.js',
     'vendor/angular-local-storage/angular-local-storage.js',
+    'vendor/angular-natural-language/build/angular-natural-language.js'
 )
 
 bootstrap_js = Bundle(

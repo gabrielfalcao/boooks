@@ -1,10 +1,11 @@
 {
-  "name": "zf5_project",
+  "name": "boooks",
   "dependencies": {
     "foundation": "zurb/bower-foundation",
+      "angular-natural-language": "git@github.com:gabrielfalcao/angular-natural-language.git",
     "angular-local-storage": "0.0.5",
     "angular-ui-router": "~0.2.10",
     "font-awesome": "~4.2.0",
-    "angularjs": "~1.3.2"
+    "angularjs": ">=1.3.2"
   }
 }
