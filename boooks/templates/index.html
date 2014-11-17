@@ -96,7 +96,9 @@
           </div>
         </div>
 
-        <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6">
+        <img src="/static/img/loader.git" ng-hide="search.books" />
+
+        <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6" ng-show="search.books">
           <li ng-repeat="book in search.books" class="book"><a href ng-click="search.showModal(book)"><img src="{{ book.images.medium }}" class="th" /></a></li>
         </ul>
       </div>

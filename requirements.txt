@@ -18,3 +18,4 @@ pygeoip==0.3.0
 webassets-recess==0.0.0
 PyNaCl==0.2.3
 gevent-socketio==0.3.6
+python-amazon-product-api==0.2.8
