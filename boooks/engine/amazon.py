@@ -101,7 +101,9 @@ def search_for_books(keywords, limit=20):
         return data
 
     results = api.item_search('Books', Keywords=keywords, IncludeReviewsSummary=True, SearchIndex='Books', MaximumPrice='30', ResponseGroup='Images,OfferFull,EditorialReview,ItemAttributes')
-    data = filter(lambda x: x, [get_item_data(x) for index, x in enumerate(results) if index < limit])
+    pre_data = [get_item_data(x) for index, x in enumerate(results) if index < limit]
+    data = filter(lambda x: x and x not in data, pre_data)
+
     set_in_cache(keywords, json.dumps(data, cls=AmazonEncoder))
     return data
 

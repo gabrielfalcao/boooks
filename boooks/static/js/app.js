@@ -50,8 +50,9 @@ angular.module("BoooksApp", [
         var controller = this;
 
         $http.get("{{ settings.absurl("/api/index") }}").success(function(data, status, headers, config) {
-            controller.books = data;
             console.log("data: ", data);
+            controller.books = data;
+
         }).
             error(function(data, status, headers, config) {
                 console.log(data);

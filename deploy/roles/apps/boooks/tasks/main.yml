@@ -3,6 +3,8 @@
 - name: ensure we have an ssh key for boooks
   command: ssh-keygen -b 4096 -t rsa -f /root/.ssh/{{ ansible_hostname }}-boooks-rsa -P ""
            creates=/root/.ssh/{{ ansible_hostname }}-boooks-rsa
+  tags:
+    - refresh
 
 - name: install npm dependencies
   shell: npm instal -g bower
@@ -14,6 +16,8 @@
 
 - name: upload the deploy key for boooks
   command: github-tool --token={{ github_token }} add --project-name=boooks --key-title="{{ ansible_hostname }}-boooks" --key-file=/root/.ssh/{{ ansible_hostname }}-boooks-rsa.pub
+  tags:
+    - refresh
 
 - name: ensure we have the most updated version of the software from git
   git: repo="git@github.com:weedlabs/boooks.git"
