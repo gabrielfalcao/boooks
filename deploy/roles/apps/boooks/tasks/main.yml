@@ -48,12 +48,19 @@
   tags:
     - refresh
 
-# - name: build assets
-#   shell: source /srv/shell-helper; python manage.py assets build
-#   args:
-#     chdir: "{{ application_path }}"
-#   tags:
-#     - refresh
+- name: build assets
+  command: python manage.py assets build
+  environment:
+    VENV_PATH: "{{ virtualenv_path }}"
+    HOST: "{{ domain }}"
+    DOMAIN: "{{ domain }}"
+    PATH: "{{ virtualenv_path }}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    PYTHONPATH: "/srv/propellrapi/src:{{ virtualenv_path }}/lib/python2.7/site-packages:$PYTHONPATH"
+    PYTHONDONTWRITEBYTECODE: "x"
+    STATIC_BASE_URL: "http://{{ domain }}/static/build"
+
+  tags:
+    - refresh
 
 - name: ensure that flask is configured
   template: src=supervisor.boooks.conf dest=/etc/supervisor/conf.d/web.{{ application_name }}.conf
