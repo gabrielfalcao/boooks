@@ -48,22 +48,6 @@
   tags:
     - refresh
 
-- name: build assets
-  command: python manage.py assets build
-  environment:
-    VENV_PATH: "{{ virtualenv_path }}"
-    HOST: "{{ domain }}"
-    SQLALCHEMY_DATABASE_URI: "{{ SQLALCHEMY_DATABASE_URI }}"
-    DOMAIN: "{{ domain }}"
-    PATH: "{{ virtualenv_path }}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-    PYTHONPATH: "/srv/propellrapi/src:{{ virtualenv_path }}/lib/python2.7/site-packages:$PYTHONPATH"
-    PYTHONDONTWRITEBYTECODE: "x"
-    STATIC_BASE_URL: "http://{{ domain }}/static/build"
-  args:
-    chdir: "{{ application_path }}"
-  tags:
-    - refresh
-
 - name: ensure that flask is configured
   template: src=supervisor.boooks.conf dest=/etc/supervisor/conf.d/web.{{ application_name }}.conf
     owner=root group=root mode=0644
@@ -82,3 +66,19 @@
 
 - name: restart redis
   service: name=redis_{{ redis_port }} state=started
+
+- name: build assets
+  command: python manage.py assets build
+  environment:
+    VENV_PATH: "{{ virtualenv_path }}"
+    HOST: "{{ domain }}"
+    SQLALCHEMY_DATABASE_URI: "{{ SQLALCHEMY_DATABASE_URI }}"
+    DOMAIN: "{{ domain }}"
+    PATH: "{{ virtualenv_path }}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    PYTHONPATH: "/srv/propellrapi/src:{{ virtualenv_path }}/lib/python2.7/site-packages:$PYTHONPATH"
+    PYTHONDONTWRITEBYTECODE: "x"
+    STATIC_BASE_URL: "http://{{ domain }}/static/build"
+  args:
+    chdir: "{{ application_path }}"
+  tags:
+    - refresh

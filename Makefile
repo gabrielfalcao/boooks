@@ -1,7 +1,5 @@
 all: test
 
-export SQLALCHEMY_DATABASE_URI:=mysql://root@localhost/boooks_db_local
-
 .PHONY: deploy
 
 test: unit functional
