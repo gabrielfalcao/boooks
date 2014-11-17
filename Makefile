@@ -56,3 +56,7 @@ static:
 
 deploy:
 	cd deploy && floresta vpcs/boooks.yml --yes --inventory-path="inventory" --ansible -vvvv --tags=refresh -M library -u ubuntu --extra-vars='{"github_token":"$(GITHUB_TOKEN)","AWS_ACCESS_KEY_ID":"$(AWS_ACCESS_KEY_ID)","AWS_SECRET_ACCESS_KEY":"$(AWS_SECRET_ACCESS_KEY)"}'
+
+
+ssh:
+	cd deploy && floresta vpcs/boooks.yml --ssh=boooks-web

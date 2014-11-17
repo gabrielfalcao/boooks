@@ -36,17 +36,10 @@ api = get_connection()
 
 
 def get_item_data(item):
-    images = api.item_lookup(str(item.ASIN), ResponseGroup='Images')
-    if not getattr(images.Items.Item, 'MediumImage', []):
-        return
 
-    offer = api.item_lookup(str(item.ASIN), ResponseGroup='OfferFull')
-    editorial = api.item_lookup(str(item.ASIN), ResponseGroup='EditorialReview')
-    attributes = api.item_lookup(str(item.ASIN), ResponseGroup='ItemAttributes')
-
-    large = getattr(images.Items.Item, 'LargeImage', [])
-    medium = getattr(images.Items.Item, 'MediumImage', [])
-    small = getattr(images.Items.Item, 'SmallImage', [])
+    large = getattr(item, 'LargeImage', [])
+    medium = getattr(item, 'MediumImage', [])
+    small = getattr(item, 'SmallImage', [])
 
     data = {
         'asin': item.ASIN,
@@ -60,27 +53,27 @@ def get_item_data(item):
         },
     }
 
-    if hasattr(editorial.Items.Item, 'EditorialReviews'):
-        data['review'] = editorial.Items.Item.EditorialReviews.EditorialReview.Content
+    if hasattr(item, 'EditorialReviews'):
+        data['review'] = item.EditorialReviews.EditorialReview.Content
 
-    data['ISBN'] = getattr(attributes.Items.Item.ItemAttributes, 'ISBN', None)
-    data['number_of_pages'] = getattr(attributes.Items.Item.ItemAttributes, 'NumberOfPages', None)
+    data['ISBN'] = getattr(item.ItemAttributes, 'ISBN', None)
+    data['number_of_pages'] = getattr(item.ItemAttributes, 'NumberOfPages', None)
 
-    if hasattr(offer.Items.Item, 'OfferSummary'):
+    if hasattr(item, 'OfferSummary'):
         data.update({
-            'total_new': offer.Items.Item.OfferSummary.TotalNew,
-            'total_used': offer.Items.Item.OfferSummary.TotalUsed,
-            'total_refurbished': offer.Items.Item.OfferSummary.TotalRefurbished,
+            'total_new': item.OfferSummary.TotalNew,
+            'total_used': item.OfferSummary.TotalUsed,
+            'total_refurbished': item.OfferSummary.TotalRefurbished,
         })
-        if hasattr(offer.Items.Item.OfferSummary, 'LowestUsedPrice'):
+        if hasattr(item.OfferSummary, 'LowestUsedPrice'):
             data.update({
-                'lowest_used_price_amount': format_currency(offer.Items.Item.OfferSummary.LowestUsedPrice.Amount),
-                'lowest_used_price_currency': offer.Items.Item.OfferSummary.LowestUsedPrice.CurrencyCode,
+                'lowest_used_price_amount': format_currency(item.OfferSummary.LowestUsedPrice.Amount),
+                'lowest_used_price_currency': item.OfferSummary.LowestUsedPrice.CurrencyCode,
             })
-        if hasattr(offer.Items.Item.OfferSummary, 'LowestNewPrice'):
+        if hasattr(item.OfferSummary, 'LowestNewPrice'):
             data.update({
-                'lowest_new_price_amount': format_currency(offer.Items.Item.OfferSummary.LowestNewPrice.Amount),
-                'lowest_new_price_currency': offer.Items.Item.OfferSummary.LowestNewPrice.CurrencyCode,
+                'lowest_new_price_amount': format_currency(item.OfferSummary.LowestNewPrice.Amount),
+                'lowest_new_price_currency': item.OfferSummary.LowestNewPrice.CurrencyCode,
             })
 
     return data
@@ -107,7 +100,7 @@ def search_for_books(keywords, limit=20):
     if data:
         return data
 
-    results = api.item_search('Books', Keywords=keywords, IncludeReviewsSummary=True, SearchIndex='Books', MaximumPrice='5')
+    results = api.item_search('Books', Keywords=keywords, IncludeReviewsSummary=True, SearchIndex='Books', MaximumPrice='30', ResponseGroup='Images,OfferFull,EditorialReview,ItemAttributes')
     data = filter(lambda x: x, [get_item_data(x) for index, x in enumerate(results) if index < limit])
     set_in_cache(keywords, json.dumps(data, cls=AmazonEncoder))
     return data
