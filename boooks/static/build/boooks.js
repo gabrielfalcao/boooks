@@ -30830,6 +30830,7 @@ angular.module("BoooksApp", [
             error(function(data, status, headers, config) {
                 console.log(data);
                 controller.loading = false;
+                controller.filteredBooks = false;
             });
         };
 
@@ -30846,7 +30847,7 @@ angular.module("BoooksApp", [
         }).
         error(function(data, status, headers, config) {
                 controller.loading = false;
-            console.log("error: ", data);
+            controller.filteredBooks = false;
         });
 
     });

@@ -75,7 +75,7 @@
               <p class="goodreads"><a href="#"><img src="/static/images/goodreads.png" class="goodreads-button" /></a> <span>to see what your friends are reading.</span></p>
 
               <p class="book-description" ng-bind-html="search.currentBook.review"><a href="#">read more...</a></p>
-              <a ng-href="{{ search.currentBook.url }}" class="button expand round circle">${{ search.currentBook.price}} on Amazon</a>
+              <a ng-href="{{ search.currentBook.url }}" class="button expand round circle">${{ search.currentBook.price || search.currentBook.lowest_used_price_amount || search.currentBook.lowest_new_price_amount }} on Amazon</a>
             </div>
           </div>
           <div class="row similar-books">
