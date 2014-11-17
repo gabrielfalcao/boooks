@@ -51,6 +51,7 @@ angular.module("BoooksApp", [
 
         $http.get("{{ settings.absurl("/api/index") }}").success(function(data, status, headers, config) {
             controller.books = data;
+            console.log("data: ", data);
         }).
             error(function(data, status, headers, config) {
                 console.log(data);

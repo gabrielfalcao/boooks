@@ -2,6 +2,9 @@
   command: add-apt-repository -y ppa:chris-lea/node.js
     creates=/etc/apt/sources.list.d/chris-lea-node_js-precise.list
 
+- name: ensure compass is installed
+  apt: pkg=ruby-compass state=latest update_cache=yes
+
 - name: ensure nodejs is installed
   apt: pkg=nodejs state=latest update_cache=yes
 
@@ -13,3 +16,7 @@
       less: "/usr/bin/lessc"
       recess: "/usr/bin/recess"
       coffee-script: "/usr/bin/coffee"
+
+
+- name: install compass
+  command: gem install compass
