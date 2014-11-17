@@ -44,12 +44,12 @@
   tags:
     - refresh
 
-- name: build assets
-  shell: source /srv/shell-helper; python manage.py assets build
-  args:
-    chdir: "{{ application_path }}"
-  tags:
-    - refresh
+# - name: build assets
+#   shell: source /srv/shell-helper; python manage.py assets build
+#   args:
+#     chdir: "{{ application_path }}"
+#   tags:
+#     - refresh
 
 - name: ensure that flask is configured
   template: src=supervisor.boooks.conf dest=/etc/supervisor/conf.d/web.{{ application_name }}.conf

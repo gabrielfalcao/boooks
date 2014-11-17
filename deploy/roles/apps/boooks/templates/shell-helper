@@ -5,6 +5,7 @@ export REDIS_URI="{{ REDIS_URI }}"
 {% if not loop.last %}
 {% endif %}{% endfor %}
 
+source {{ virtualenv_path }}/bin/activate
 cd {{ application_path }}
 echo "Ready for:"
 echo python manage.py shell
