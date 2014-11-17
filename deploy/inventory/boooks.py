@@ -19,10 +19,6 @@ print '''{
           "subnet": {
             "instance": {
               "name": "web-subnet", 
-              "availability_zone": "us-east-1b", 
-              "region": {
-                "name": "us-east-1"
-              }, 
               "tags": {
                 "Tier": "web", 
                 "LastFlorestaRun": "2014-11-11T05:07:37.856104", 
@@ -30,9 +26,13 @@ print '''{
                 "Name": "web-subnet", 
                 "VPC": "boooks"
               }, 
-              "class": "boto.vpc.subnet.Subnet", 
+              "region": {
+                "name": "us-east-1"
+              }, 
+              "availability_zone": "us-east-1b", 
+              "id": "subnet-5169c226", 
               "cidr_block": "10.0.0.0/24", 
-              "id": "subnet-5169c226"
+              "class": "boto.vpc.subnet.Subnet"
             }, 
             "cidr": "10.0.0.0/24", 
             "name": "web-subnet", 
@@ -54,10 +54,10 @@ print '''{
               "Name": "boooks-web", 
               "VPC": "boooks"
             }, 
-            "class": "boto.ec2.instance.Instance", 
+            "id": "i-b7881e5d", 
             "private_ip_address": "10.0.0.203", 
             "ip_address": "54.173.167.190", 
-            "id": "i-b7881e5d"
+            "class": "boto.ec2.instance.Instance"
           }, 
           "ansible_roles_path": "~/projects/personal/boooks/deploy", 
           "ansible": {
@@ -84,17 +84,17 @@ print '''{
           "tier": "web", 
           "security_group": {
             "instance": {
+              "class": "boto.ec2.securitygroup.SecurityGroup", 
+              "description": "Tier web security group", 
               "id": "sg-bcedfed9", 
+              "name": "web", 
               "tags": {
                 "LastFlorestaRun": "2014-11-11T05:07:39.278219", 
                 "Tier": "web", 
                 "Role": "SecurityGroup", 
                 "Name": "web", 
                 "VPC": "boooks"
-              }, 
-              "class": "boto.ec2.securitygroup.SecurityGroup", 
-              "name": "web", 
-              "description": "Tier web security group"
+              }
             }, 
             "outbound_rules": [
               {
@@ -136,18 +136,18 @@ print '''{
           "instance-type": "m1.small", 
           "instance_name": "boooks-web [web]", 
           "gateway": {
-            "id": "igw-6d46e208", 
-            "tags": {
-              "Name": "boooks-gateway"
-            }, 
             "attachments": [
               {
                 "vpc_id": "vpc-85911ae0", 
                 "state": "available"
               }
             ], 
+            "class": "boto.vpc.internetgateway.InternetGateway", 
+            "id": "igw-6d46e208", 
             "name": "boooks-gateway", 
-            "class": "boto.vpc.internetgateway.InternetGateway"
+            "tags": {
+              "Name": "boooks-gateway"
+            }
           }
         }, 
         "PUBLIC_IPS": {}, 
@@ -159,6 +159,10 @@ print '''{
             "subnet": {
               "instance": {
                 "name": "web-subnet", 
+                "availability_zone": "us-east-1b", 
+                "region": {
+                  "name": "us-east-1"
+                }, 
                 "tags": {
                   "Tier": "web", 
                   "LastFlorestaRun": "2014-11-11T05:07:37.856104", 
@@ -166,13 +170,9 @@ print '''{
                   "Name": "web-subnet", 
                   "VPC": "boooks"
                 }, 
-                "region": {
-                  "name": "us-east-1"
-                }, 
-                "availability_zone": "us-east-1b", 
-                "id": "subnet-5169c226", 
+                "class": "boto.vpc.subnet.Subnet", 
                 "cidr_block": "10.0.0.0/24", 
-                "class": "boto.vpc.subnet.Subnet"
+                "id": "subnet-5169c226"
               }, 
               "cidr": "10.0.0.0/24", 
               "name": "web-subnet", 
@@ -184,18 +184,18 @@ print '''{
             "availability_zone": "us-east-1b", 
             "ami-id": "ami-e84d8480", 
             "gateway": {
+              "id": "igw-6d46e208", 
+              "tags": {
+                "Name": "boooks-gateway"
+              }, 
               "attachments": [
                 {
                   "vpc_id": "vpc-85911ae0", 
                   "state": "available"
                 }
               ], 
-              "class": "boto.vpc.internetgateway.InternetGateway", 
-              "id": "igw-6d46e208", 
               "name": "boooks-gateway", 
-              "tags": {
-                "Name": "boooks-gateway"
-              }
+              "class": "boto.vpc.internetgateway.InternetGateway"
             }, 
             "hosted_zone_id": "ZEPX1Q8LGM34G", 
             "instance": {
@@ -207,10 +207,10 @@ print '''{
                 "Name": "boooks-web", 
                 "VPC": "boooks"
               }, 
-              "id": "i-b7881e5d", 
+              "class": "boto.ec2.instance.Instance", 
               "private_ip_address": "10.0.0.203", 
               "ip_address": "54.173.167.190", 
-              "class": "boto.ec2.instance.Instance"
+              "id": "i-b7881e5d"
             }, 
             "ansible_roles_path": "~/projects/personal/boooks/deploy", 
             "ansible": {
@@ -237,17 +237,17 @@ print '''{
             "tier": "web", 
             "security_group": {
               "instance": {
-                "class": "boto.ec2.securitygroup.SecurityGroup", 
-                "description": "Tier web security group", 
                 "id": "sg-bcedfed9", 
-                "name": "web", 
                 "tags": {
                   "LastFlorestaRun": "2014-11-11T05:07:39.278219", 
                   "Tier": "web", 
                   "Role": "SecurityGroup", 
                   "Name": "web", 
                   "VPC": "boooks"
-                }
+                }, 
+                "class": "boto.ec2.securitygroup.SecurityGroup", 
+                "name": "web", 
+                "description": "Tier web security group"
               }, 
               "outbound_rules": [
                 {
@@ -304,6 +304,10 @@ print '''{
         "subnet": {
           "instance": {
             "name": "web-subnet", 
+            "availability_zone": "us-east-1b", 
+            "region": {
+              "name": "us-east-1"
+            }, 
             "tags": {
               "Tier": "web", 
               "LastFlorestaRun": "2014-11-11T05:07:37.856104", 
@@ -311,13 +315,9 @@ print '''{
               "Name": "web-subnet", 
               "VPC": "boooks"
             }, 
-            "region": {
-              "name": "us-east-1"
-            }, 
-            "availability_zone": "us-east-1b", 
-            "id": "subnet-5169c226", 
+            "class": "boto.vpc.subnet.Subnet", 
             "cidr_block": "10.0.0.0/24", 
-            "class": "boto.vpc.subnet.Subnet"
+            "id": "subnet-5169c226"
           }, 
           "cidr": "10.0.0.0/24", 
           "name": "web-subnet", 
@@ -329,18 +329,18 @@ print '''{
         "availability_zone": "us-east-1b", 
         "ami-id": "ami-e84d8480", 
         "gateway": {
+          "id": "igw-6d46e208", 
+          "tags": {
+            "Name": "boooks-gateway"
+          }, 
           "attachments": [
             {
               "vpc_id": "vpc-85911ae0", 
               "state": "available"
             }
           ], 
-          "class": "boto.vpc.internetgateway.InternetGateway", 
-          "id": "igw-6d46e208", 
           "name": "boooks-gateway", 
-          "tags": {
-            "Name": "boooks-gateway"
-          }
+          "class": "boto.vpc.internetgateway.InternetGateway"
         }, 
         "hosted_zone_id": "ZEPX1Q8LGM34G", 
         "instance": {
@@ -352,10 +352,10 @@ print '''{
             "Name": "boooks-web", 
             "VPC": "boooks"
           }, 
-          "id": "i-b7881e5d", 
+          "class": "boto.ec2.instance.Instance", 
           "private_ip_address": "10.0.0.203", 
           "ip_address": "54.173.167.190", 
-          "class": "boto.ec2.instance.Instance"
+          "id": "i-b7881e5d"
         }, 
         "ansible_roles_path": "~/projects/personal/boooks/deploy", 
         "ansible": {
@@ -382,17 +382,17 @@ print '''{
         "tier": "web", 
         "security_group": {
           "instance": {
-            "class": "boto.ec2.securitygroup.SecurityGroup", 
-            "description": "Tier web security group", 
             "id": "sg-bcedfed9", 
-            "name": "web", 
             "tags": {
               "LastFlorestaRun": "2014-11-11T05:07:39.278219", 
               "Tier": "web", 
               "Role": "SecurityGroup", 
               "Name": "web", 
               "VPC": "boooks"
-            }
+            }, 
+            "class": "boto.ec2.securitygroup.SecurityGroup", 
+            "name": "web", 
+            "description": "Tier web security group"
           }, 
           "outbound_rules": [
             {

@@ -97,7 +97,7 @@ def get_from_cache(keywords):
         return json.loads(raw)
 
 
-def set_in_cache(data, keywords):
+def set_in_cache(keywords, data):
     conn = redis.StrictRedis()
     conn.set(cache_key(keywords), json.dumps(data, cls=AmazonEncoder))
 

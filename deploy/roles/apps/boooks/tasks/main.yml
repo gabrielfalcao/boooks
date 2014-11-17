@@ -20,6 +20,8 @@
        dest="{{ application_path }}" accept_hostkey=True
        version="{{ repository_version }}"
        key_file=/root/.ssh/{{ ansible_hostname }}-boooks-rsa
+  tags:
+    - refresh
 
 - name: place ssh config for github
   template: src=ssh_config dest="/root/.ssh/config"
@@ -39,6 +41,13 @@
 - name: place a handy shell script
   template: src=shell-helper dest=/srv/shell-helper
     owner=root group=root mode=0644
+  tags:
+    - refresh
+
+- name: build assets
+  shell: source /srv/shell-helper; python manage.py assets build
+  args:
+    chdir: "{{ application_path }}"
   tags:
     - refresh
 

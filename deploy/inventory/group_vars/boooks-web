@@ -39,7 +39,4 @@ REDIS_URI: "redis://localhost:6379"
 BOOOKS_ENVIRONMENT: "development"
 
 AWS_DEFAULT_REGION: "us-east-1"
-AWS_ACCESS_KEY_ID: "AKIAIRXUAP7LUL4JHN7Q"
-AWS_SECRET_ACCESS_KEY: "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"
-
 backup_folder_path: "/srv/backups"

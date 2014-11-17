@@ -56,6 +56,7 @@ def inject_basics():
 
 @module.route('/')
 def index():
+    search_for_books('Featured')
     return render_template('index.html')
 
 
