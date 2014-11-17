@@ -46,6 +46,9 @@ def get_item_data(item):
     medium = getattr(item, 'MediumImage', [])
     small = getattr(item, 'SmallImage', [])
 
+    if not len(large) or not len(medium) or not len(small):
+        return
+
     data = {
         'asin': item.ASIN,
         'url': item.DetailPageURL,
