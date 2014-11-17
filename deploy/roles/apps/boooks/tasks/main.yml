@@ -72,6 +72,8 @@
   environment:
     VENV_PATH: "{{ virtualenv_path }}"
     HOST: "{{ domain }}"
+    REDIS_URI: "{{ REDIS_URI }}"
+    PORT: "80"
     SQLALCHEMY_DATABASE_URI: "{{ SQLALCHEMY_DATABASE_URI }}"
     DOMAIN: "{{ domain }}"
     PATH: "{{ virtualenv_path }}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
