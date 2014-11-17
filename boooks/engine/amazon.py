@@ -34,9 +34,14 @@ def get_connection():
 
 api = get_connection()
 
+URL_CACHE = []
+
 
 def get_item_data(item):
+    if item.DetailPageURL in URL_CACHE:
+        return
 
+    URL_CACHE.append(item.DetailPageURL)
     large = getattr(item, 'LargeImage', [])
     medium = getattr(item, 'MediumImage', [])
     small = getattr(item, 'SmallImage', [])
@@ -101,7 +106,7 @@ def search_for_books(keywords, limit=20):
         return data
 
     results = api.item_search('Books', Keywords=keywords, IncludeReviewsSummary=True, SearchIndex='Books', MaximumPrice='30', ResponseGroup='Images,OfferFull,EditorialReview,ItemAttributes')
-    data = list(set([get_item_data(x) for index, x in enumerate(results) if index < limit]))
+    data = list([get_item_data(x) for index, x in enumerate(results) if index < limit])
 
     set_in_cache(keywords, json.dumps(data, cls=AmazonEncoder))
     return data
