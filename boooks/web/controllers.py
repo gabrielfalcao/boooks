@@ -56,7 +56,7 @@ def inject_basics():
 
 @module.route('/')
 def index():
-    search_for_books('Popular')
+    search_for_books('Best Seller')
     return render_template('index.html')
 
 
@@ -104,7 +104,7 @@ from boooks.engine.amazon import search_for_books
 
 class IndexResource(ApiResource):
     def get(self):
-        result = search_for_books('Popular')
+        result = search_for_books('Best Seller')
         return json_response(result, 200)
 
 
