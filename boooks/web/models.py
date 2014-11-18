@@ -15,7 +15,7 @@ metadata = MetaData()
 class SlugModel(Model):
     @classmethod
     def get_or_create_from_name(cls, name):
-        name = unicode(name)
+        name = unicode(name, 'utf-8')
         slug = slugify(name)
         found = cls.get_or_create(slug=slug)
         found.name = name
@@ -55,16 +55,16 @@ class Book(Model):
     def get_or_create_from_dict(cls, data):
         author = Author.get_or_create_from_name(data['author'])
         cleaned = {}
-        cleaned['ASIN'] = unicode(data['ASIN'])
-        cleaned['ISBN'] = unicode(data['ISBN'])
-        cleaned['url'] = unicode(data['url'])
-        cleaned['slug'] = slugify(data['title'])
-        cleaned['title'] = unicode(data['title'])
-        cleaned['number_of_pages'] = unicode(data['number_of_pages'])
-        cleaned['price'] = (
+        cleaned['ASIN'] = unicode(data['ASIN'], 'utf-8')
+        cleaned['ISBN'] = unicode(data['ISBN'], 'utf-8')
+        cleaned['url'] = unicode(data['url'], 'utf-8')
+        cleaned['slug'] = slugify(data['title'], 'utf-8')
+        cleaned['title'] = unicode(data['title'], 'utf-8')
+        cleaned['number_of_pages'] = unicode(data['number_of_pages'], 'utf-8')
+        cleaned['price'] = unicode(
             data.get('price', None) or
             data.get('lowest_used_price_amount', None) or
-            data.get('lowest_new_price_amount', None) or '0.00'
+            data.get('lowest_new_price_amount', None) or '0.00', 'utf-8'
         )
 
         found = cls.get_or_create(
