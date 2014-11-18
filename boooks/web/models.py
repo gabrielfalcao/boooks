@@ -143,8 +143,10 @@ class CategoryKeywords(Model):
 
     @property
     def category(self):
-        return SearchCategory.find_one_by(id=self.search_category_id)
+        if self.search_category_id:
+            return SearchCategory.find_one_by(id=self.search_category_id)
 
     @property
     def niche(self):
-        return SearchNiche.find_one_by(id=self.search_niche_id)
+        if self.search_niche_id:
+            return SearchNiche.find_one_by(id=self.search_niche_id)
