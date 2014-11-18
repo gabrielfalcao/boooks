@@ -97,7 +97,7 @@
         </div>
 
         <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6" ng-show="search.books">
-          <li ng-repeat="book in search.filteredBooks" class="book"><a href ng-click="search.showModal(book)"><img src="{{ book.images.medium }}" class="th" /></a></li>
+          <li ng-repeat="book in search.filteredBooks" class="book"><a href ng-click="search.showModal(book)"><img src="{{ book.images.large }}" class="th" /></a></li>
         </ul>
       </div>
       {% endraw %}
