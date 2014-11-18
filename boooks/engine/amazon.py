@@ -51,7 +51,7 @@ def get_item_data(item):
         return
 
     data = {
-        'asin': item.ASIN,
+        'ASIN': item.ASIN,
         'url': item.DetailPageURL,
         'author': getattr(item.ItemAttributes, 'Author', None),
         'title': item.ItemAttributes.Title,
@@ -76,12 +76,12 @@ def get_item_data(item):
             'price': hasattr(item.Offers, 'Offer') and format_currency(item.Offers.Offer.OfferListing.Price.Amount) or None,
         })
 
-        if hasattr(item.OfferSummary, 'LowestUsedPrice'):
+        if hasattr(item.OfferSummary, 'LowestUsedPrice') and hasattr(item.OfferSummary.LowestUsedPrice, 'Amount'):
             data.update({
                 'lowest_used_price_amount': format_currency(item.OfferSummary.LowestUsedPrice.Amount),
                 'lowest_used_price_currency': item.OfferSummary.LowestUsedPrice.CurrencyCode,
             })
-        if hasattr(item.OfferSummary, 'LowestNewPrice'):
+        if hasattr(item.OfferSummary, 'LowestNewPrice') and hasattr(item.OfferSummary.LowestNewPrice, 'Amount'):
             data.update({
                 'lowest_new_price_amount': format_currency(item.OfferSummary.LowestNewPrice.Amount),
                 'lowest_new_price_currency': item.OfferSummary.LowestNewPrice.CurrencyCode,

@@ -18,7 +18,7 @@ logger = get_logger('boooks')
 
 
 def slugify(string):
-    normalized = unicodedata.normalize("NFKD", string.lower())
+    normalized = unicodedata.normalize("NFKD", unicode(string).lower())
     dashed = re.sub(r'\s+', '-', normalized)
     return re.sub(r'[^\w-]+', '', dashed)
 

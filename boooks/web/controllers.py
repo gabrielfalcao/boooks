@@ -17,7 +17,7 @@ from boooks.framework.http import (
 
 from boooks import settings
 from boooks.framework.handy.functions import get_ip
-
+from boooks.web.models import Book
 from flask import (
     Blueprint,
     render_template,
@@ -117,6 +117,8 @@ from boooks.engine.amazon import search_for_books
 class IndexResource(ApiResource):
     def get(self):
         result = search_for_books('Best Seller')
+        for item in result:
+            print Book.get_or_create_from_dict(item)
         return json_response(result, 200)
 
 
@@ -129,6 +131,9 @@ class SearchResource(ApiResource):
         ])
 
         books = search_for_books(**data)
+
+        for item in books:
+            print Book.get_or_create_from_dict(item)
 
         return json_response(books, 200)
 

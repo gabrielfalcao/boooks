@@ -264,6 +264,12 @@ class Model(object):
         it must return a dictionary"""
         return data
 
+    def update(self, **kw):
+        for k, v in kw.items():
+            setattr(self, k, v)
+
+        return self
+
     def get_encryption_box_for_attribute(self, attr):
         keymap = dict(getattr(self, 'encryption', {}))
         if attr not in keymap:
