@@ -206,8 +206,8 @@ class AdminKeywords(ApiResource):
         keywords = data['keywords']
         results = []
         for p in keywords:
-            niche = p['niche']
-            category = p['category']
+            niche = p['niche'] or {}
+            category = p['category'] or {}
 
             r = CategoryKeywords.get_or_create(
                 search_niche_id=niche.get('id', None),
