@@ -7,7 +7,10 @@ from boooks.framework.db import (
     DefaultForeignKey
 )
 from boooks.framework.handy.functions import slugify
+from logging import getLogger
 
+
+logger = getLogger('boooks')
 
 metadata = MetaData()
 
@@ -53,26 +56,31 @@ class Book(Model):
 
     @classmethod
     def get_or_create_from_dict(cls, data):
-        author = Author.get_or_create_from_name(data['author'])
-        cleaned = {}
-        cleaned['ASIN'] = unicode(data['ASIN'])
-        cleaned['ISBN'] = unicode(data['ISBN'])
-        cleaned['url'] = unicode(data['url'])
-        cleaned['slug'] = slugify(data['title'])
-        cleaned['title'] = unicode(data['title'])
-        cleaned['number_of_pages'] = unicode(data['number_of_pages'])
-        cleaned['price'] = (
-            data.get('price', None) or
-            data.get('lowest_used_price_amount', None) or
-            data.get('lowest_new_price_amount', None) or '0.00'
-        )
+        try:
+            author = Author.get_or_create_from_name(data['author'])
+            cleaned = {}
+            cleaned['ASIN'] = unicode(data['ASIN'])
+            cleaned['ISBN'] = unicode(data['ISBN'])
+            cleaned['url'] = unicode(data['url'])
+            cleaned['slug'] = slugify(data['title'])
+            cleaned['title'] = unicode(data['title'])
+            cleaned['number_of_pages'] = unicode(data['number_of_pages'])
+            cleaned['price'] = (
+                data.get('price', None) or
+                data.get('lowest_used_price_amount', None) or
+                data.get('lowest_new_price_amount', None) or '0.00'
+            )
 
-        found = cls.get_or_create(
-            author_id=author.id,
-            ASIN=cleaned['ASIN'])
+            found = cls.get_or_create(
+                author_id=author.id,
+                ASIN=cleaned['ASIN'])
 
-        found.update(**cleaned)
-        found.save()
+            found.update(**cleaned)
+            found.save()
+        except:
+            logger.error('failed to get_or_create_from_dict')
+            return
+
         return found
 
 
