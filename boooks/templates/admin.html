@@ -11,7 +11,7 @@
         <h1>Keywords Admin</h1>
 
 
-        <table role="grid" class="small-10 centered columns table">
+        <table role="grid" class="small-10 centered columns table" ng-show="admin.keywords.length">
           <thead>
             <tr>
               <th width="200">when category</th>
@@ -20,6 +20,13 @@
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>
+                <input type="button" value="save keywords" class="button success" ng-click="admin.saveKeywords(admin.keywords)"/>
+              </td>
+            </tr>
             <tr ng-repeat="item in admin.keywords">
               <td>{{ item.category.name }}</td>
               <td>{{ item.niche.name }}</td>
@@ -39,7 +46,7 @@
         <hr />
 
         <div class="small-4 columns">
-          <table role="grid">
+          <table role="grid" ng-show="admin.categories.length">
             <thead>
               <tr>
                 <th width="200"> {{ admin.categories.length }} existing categories</th>
@@ -61,7 +68,7 @@
           </form>
         </div>
 
-        <div class="small-4 columns">
+        <div class="small-4 columns" ng-show="admin.niches.length">
           <table role="grid">
             <thead>
               <tr>
