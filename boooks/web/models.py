@@ -111,8 +111,8 @@ class CategoryKeywords(Model):
 
     def to_dict(self):
         data = self.serialize()
-        data['category'] = self.category.to_dict()
-        data['niche'] = self.niche.to_dict()
+        data['category'] = self.category and self.category.to_dict() or None
+        data['niche'] = self.niche and self.niche.to_dict() or None
         return data
 
     @classmethod
@@ -143,10 +143,8 @@ class CategoryKeywords(Model):
 
     @property
     def category(self):
-        if self.search_category_id:
-            return SearchCategory.find_one_by(id=self.search_category_id)
+        return SearchCategory.find_one_by(id=self.search_category_id)
 
     @property
     def niche(self):
-        if self.search_niche_id:
-            return SearchNiche.find_one_by(id=self.search_niche_id)
+        return SearchNiche.find_one_by(id=self.search_niche_id)
