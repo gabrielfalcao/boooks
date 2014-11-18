@@ -54,7 +54,7 @@ static:
 
 deploy:
 	git sync
-	cd deploy && floresta vpcs/boooks.yml --yes --inventory-path="inventory" --ansible -vvvv -M library -u ubuntu --extra-vars='{"github_token":"$(GITHUB_TOKEN)"}'
+	cd deploy && floresta vpcs/boooks.yml --yes --inventory-path="inventory" --ansible -vvvv --tags=refresh -M library -u ubuntu --extra-vars='{"github_token":"$(GITHUB_TOKEN)"}'
 
 
 ssh:
