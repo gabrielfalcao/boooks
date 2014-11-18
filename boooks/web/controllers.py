@@ -145,10 +145,11 @@ class SearchResource(ApiResource):
         )
 
         data['keywords'] = keywords.keywords
+        logger.info('searching for %s', keywords.keywords)
         books = search_for_books(**data)
 
         for item in books:
-            print Book.get_or_create_from_dict(item)
+            logger.info('storing book %s', Book.get_or_create_from_dict(item))
 
         return json_response(books, 200)
 
