@@ -1,59 +1,43 @@
 {% extends "base.html" %}
-
 {% block main %}
 <section role="main" class="body-section" ng-controller="BoooksSearchController as search">
-
   <div class="stack">
     <div class="row filter-feature">
       <div class="small-12 centered columns">
-
         <h2 class="intro">What do you want to read next?</h2>
-
         <form id="nl-form" class="nl-form">
-                    I'm looking for
-          <nl-select
+          I'm looking for <nl-select
               value="search.chosenNicheID"
               ng-click="search.applyFilters()"
               options="{{ niches }}">
-          </nl-select>
-                    books about
+          </nl-select> books about
           <nl-select
               ng-click="search.applyFilters()"
               value="search.chosenCategoryID"
               options="{{ categories }}">
           </nl-select>
           <br />
-                    under
-
-          <nl-select
+          under <nl-select
               value="search.filterMaxPrice"
               ng-click="search.applyFilters()"
               options="[{label: '$5', value: '5'},{label: '$1', value: '1'},{label: '$3', value: '3'},{label: '$10', value: '10'},{label: '$20', value: '20'},{label: '$30', value: '30'}]">
           </nl-select>
-
-                    for a
-
-          <nl-select
+          for a <nl-select
               value="search.filterMaxMinutes"
               ng-click="search.applyFilters()"
               options="[{value: '120', label: '2 hours'},{value: '180', label: '3 hours'},{value: '300', label: '5 hours'},{value: '600', label: '10 hours'},{value: '900', label: '15 hours'}]">
           </nl-select>
-                    reading.
+          reading.
         </form>
-
       </div>
     </div>
     <div class="row">
       {% raw %}
       <div class="small-12 columns">
-        <!-- modal -->
         <div id="myModal" class="reveal-modal" data-reveal ng-if="search.currentBook">
-
           <div class="row book-details">
             <div class="small-12 large-4 columns">
-
               <img src="{{ search.currentBook.images.large }}" />
-
             </div>
             <div class="small-12 large-7 columns">
               <a class="close-reveal-modal">&#215;</a>
@@ -61,44 +45,16 @@
                 <h3>{{ search.currentBook.title }}</h3>
                 <h4 class="author">by {{ search.currentBook.author }} </h4>
               </div>
-              <!--
-              <ul class="inline-list avatars">
-                <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/48.jpg" /></li>
-                <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/48.jpg" /></li>
-                <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/chadengle/48.jpg" /></li>
-                <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/walterstephanie/48.jpg" /></li>
-                <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/48.jpg" /></li>
-                <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/mrjohnwalker/48.jpg" /></li>
-                <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/dakshbhagya/48.jpg" /></li>
-                <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/48.jpg" /></li>
-              </ul>
-              <p class="goodreads"><a href="#"><img src="/static/images/goodreads.png" class="goodreads-button" /></a> <span>to see what your friends are reading.</span></p>
-
-              <p class="book-description" ng-bind-html="search.currentBook.review"><a href="#">read more...</a></p>
-              - -->
-              <a ng-href="{{ search.currentBook.url }}" class="button expand round circle">only ${{ search.currentBook.price || search.currentBook.lowest_used_price_amount || search.currentBook.lowest_new_price_amount }} buy now on Amazon</a>
-            </div>
-          </div>
-          <!--
-          <div class="row similar-books">
-            <div class="small-12 columns">
-              <h6 class="discret-title"> Similar books</h6>
-              <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6">
-                <li class="book"><img src="/static/images/13.jpg" class="th" /></li><li class="book"><img src="/static/images/14.jpg" class="th" /></li><li class="book"><img src="/static/images/12.jpg" class="th" /></li><li class="book"><img src="/static/images/17.jpg" class="th"/></li><li class="book"><img src="/static/images/33.jpeg" class="th"/></li><li class="book"><img src="/static/images/35.jpeg" class="th"/></li>
-              </ul>
+              <a ng-href="{{ search.currentBook.url }}" class="button expand round circle">only ${{ search.currentBook.price || search.currentBook.lowest_used_price_amount || search.currentBook.lowest_new_price_amount }} on Amazon</a>
             </div>
           </div>
         </div>
-              -->
-
         <div ng-show="search.loading" class="small-12 centered columns">
           <h2>loading...</h2>
         </div>
-
         <div ng-hide="search.filteredBooks" class="small-12 centered columns">
           <h2>nothing found</h2>
         </div>
-
         <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6" ng-show="search.books">
           <li ng-repeat="book in search.filteredBooks" class="book"><a href ng-click="search.showModal(book)"><img src="{{ book.images.large }}" class="th" /></a></li>
         </ul>
@@ -108,8 +64,6 @@
   </div>
 </section>
 {% endblock %}
-
-
 {% block js %}
     {{ super() }}
     <script src="/static/build/boooks.js"></script>
