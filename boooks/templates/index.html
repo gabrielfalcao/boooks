@@ -61,7 +61,7 @@
                 <h3>{{ search.currentBook.title }}</h3>
                 <h4 class="author">by {{ search.currentBook.author }} </h4>
               </div>
-
+              <!--
               <ul class="inline-list avatars">
                 <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/48.jpg" /></li>
                 <li><img src="https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/48.jpg" /></li>
@@ -75,9 +75,11 @@
               <p class="goodreads"><a href="#"><img src="/static/images/goodreads.png" class="goodreads-button" /></a> <span>to see what your friends are reading.</span></p>
 
               <p class="book-description" ng-bind-html="search.currentBook.review"><a href="#">read more...</a></p>
-              <a ng-href="{{ search.currentBook.url }}" class="button expand round circle">${{ search.currentBook.price || search.currentBook.lowest_used_price_amount || search.currentBook.lowest_new_price_amount }} on Amazon</a>
+              - -->
+              <a ng-href="{{ search.currentBook.url }}" class="button expand round circle">only ${{ search.currentBook.price || search.currentBook.lowest_used_price_amount || search.currentBook.lowest_new_price_amount }} buy now on Amazon</a>
             </div>
           </div>
+          <!--
           <div class="row similar-books">
             <div class="small-12 columns">
               <h6 class="discret-title"> Similar books</h6>
@@ -87,6 +89,7 @@
             </div>
           </div>
         </div>
+              -->
 
         <div ng-show="search.loading" class="small-12 centered columns">
           <h2>loading...</h2>
