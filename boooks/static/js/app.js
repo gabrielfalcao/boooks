@@ -49,8 +49,10 @@ angular.module("BoooksApp", [
     })
     .controller("BoooksSearchController", function($scope, $http){
         var controller = this;
-        this.filterMaxPrice = '5';
-        this.filterMaxMinutes = '120';
+        this.chosenNicheID = 1;
+        this.chosenCategoryID = 1;
+        this.filterMaxPrice = '100';
+        this.filterMaxMinutes = '900';
         this.loading = true;
 
         this.applyFilters = function(){
