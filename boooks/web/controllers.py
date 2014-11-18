@@ -197,9 +197,12 @@ class AdminKeywords(ApiResource):
         return json_response([c.to_dict() for c in results], 200)
 
     def post(self):
+        print self.get_json_request()
+
         data = self.parse_json_fields([
             'keywords',
         ])
+
         keywords = data['keywords']
         results = []
         for p in keywords:
