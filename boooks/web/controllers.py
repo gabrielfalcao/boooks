@@ -122,8 +122,6 @@ from boooks.engine.amazon import search_for_books
 class IndexResource(ApiResource):
     def get(self):
         result = search_for_books('Best Seller')
-        for item in result:
-            print Book.get_or_create_from_dict(item)
         return json_response(result, 200)
 
 
@@ -147,9 +145,6 @@ class SearchResource(ApiResource):
         data['keywords'] = keywords.keywords
         logger.info('searching for %s', keywords.keywords)
         books = search_for_books(**data)
-
-        for item in books:
-            logger.info('storing book %s', Book.get_or_create_from_dict(item))
 
         return json_response(books, 200)
 
