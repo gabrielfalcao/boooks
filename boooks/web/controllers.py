@@ -132,10 +132,10 @@ class SearchResource(ApiResource):
             'category_id',
             'max_price',
             'max_pages',
-        ])
+        ], validate=False)
 
-        niche_id = data.pop('niche_id')
-        category_id = data.pop('category_id')
+        niche_id = data.pop('niche_id', None)
+        category_id = data.pop('category_id', None)
 
         keywords = CategoryKeywords.find_one_by(
             search_niche_id=niche_id,
