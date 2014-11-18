@@ -52,7 +52,7 @@
         <div ng-show="search.loading" class="small-12 centered columns">
           <h2>loading...</h2>
         </div>
-        <div ng-hide="search.filteredBooks" class="small-12 centered columns">
+        <div ng-hide="search.filteredBooks || search.loading" class="small-12 centered columns">
           <h2>nothing found</h2>
         </div>
         <ul class="shelf small-block-grid-2 medium-block-grid-4 large-block-grid-6" ng-show="search.books">
