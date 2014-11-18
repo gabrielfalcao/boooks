@@ -55,12 +55,12 @@ class Book(Model):
     def get_or_create_from_dict(cls, data):
         author = Author.get_or_create_from_name(data['author'])
         cleaned = {}
-        cleaned['ASIN'] = data['ASIN']
-        cleaned['ISBN'] = data['ISBN']
-        cleaned['url'] = data['url']
+        cleaned['ASIN'] = unicode(data['ASIN'])
+        cleaned['ISBN'] = unicode(data['ISBN'])
+        cleaned['url'] = unicode(data['url'])
         cleaned['slug'] = slugify(data['title'])
-        cleaned['title'] = data['title']
-        cleaned['number_of_pages'] = data['number_of_pages']
+        cleaned['title'] = unicode(data['title'])
+        cleaned['number_of_pages'] = unicode(data['number_of_pages'])
         cleaned['price'] = (
             data.get('price', None) or
             data.get('lowest_used_price_amount', None) or
