@@ -198,11 +198,11 @@ class AdminKeywords(ApiResource):
 
     def post(self):
         data = self.parse_json_fields([
-            'possibilities',
+            'keywords',
         ])
-        possibilities = data['possibilities']
+        keywords = data['keywords']
         results = []
-        for p in possibilities:
+        for p in keywords:
             r = CategoryKeywords.get_or_create(
                 search_niche_id=p['niche']['id'],
                 search_category_id=p['category']['id'],
