@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block ngapp %}AdminApp{% endblock %}
+{% block ngcontroller %}AdminMainCtrl{% endblock %}
+
+{% block main %}
+{% raw %}
+<section role="main" class="body-section" ng-controller="AdminController as admin">
+  <div class="stack">
+    <div class="row">
+      <div class="small-12 centered columns">
+        <h1>Keywords Admin</h1>
+
+
+        <table role="grid" class="small-10 centered columns table">
+          <thead>
+            <tr>
+              <th width="200">category</th>
+              <th width="200">niche</th>
+              <th width="200">keywords</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in admin.keywords">
+              <td>{{ item.category.name }}</td>
+              <td>{{ item.niche.name }}</td>
+              <td>
+                <input maxlength="255" type="text" ng-model="item.keywords" />
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>
+                <input type="button" value="save keywords" class="button success" ng-click="admin.saveKeywords(admin.keywords)"/>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <hr />
+
+        <div class="small-4 columns">
+          <table role="grid">
+            <thead>
+              <tr>
+                <th width="200"> {{ admin.categories.length }} existing categories</th>
+                <th width="100"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="category in admin.categories">
+                <td>{{ category.name }}</td>
+                <td><input type="button" name="delete" value="delete"  class="button alert tiny" ng-click="admin.deleteCategory(category.id)" /></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Create Category</h3>
+          <form>
+            <input ng-model="categoryName" type="text" placeholder="Arts & Design" />
+            <input type="button" class="button" value="Create" ng-click="admin.createCategory(categoryName)">
+          </form>
+        </div>
+
+        <div class="small-4 columns">
+          <table role="grid">
+            <thead>
+              <tr>
+                <th width="200">{{ admin.niches.length }} existing niches</th>
+                <th width="100"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="niche in admin.niches">
+                <td>{{ niche.name }}</td>
+                <td><input type="button" name="delete" value="delete"  class="button alert tiny" ng-click="admin.deleteNiche(niche.id)" /></td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>Create Niche</h3>
+          <form>
+            <input ng-model="nicheName" type="text" placeholder="award-winning" />
+            <input type="button" class="button" value="Create" ng-click="admin.createNiche(nicheName)">
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endraw %}
+ {% endblock %}
+
+
+ {% block js %}
+ {{ super() }}
+<script src="/static/build/admin.js"></script>
+ {% endblock %}

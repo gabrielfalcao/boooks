@@ -30743,110 +30743,107 @@ angular.module('vr.directives.nlForm.text',[])
 
 	}]);
 
-angular.module("BoooksApp.Common", [
-]).directive('navbar', function(localStorageService, $rootScope, $state) {
-    return {
-        restrict: 'E',
-        templateUrl: "/static/build/templates/navbar.html",
-        link: function (scope, element, attrs) {
-            scope.login = function(){
-                $state.go('login');
-            };
-            scope.logout = function(){
-                localStorageService.clearAll();
-                $rootScope.bongAuthToken = null;
-                $state.go('login');
-            };
-        }
-    }
-});
-
-var app = (function(document, $) {
-
-    'use strict';
-    var docElem = document.documentElement,
-
-    _userAgentInit = function() {
-	docElem.setAttribute('data-useragent', navigator.userAgent);
-    },
-    _init = function() {
-	$(document).foundation();
-	_userAgentInit();
-    };
-
-    return {
-	init: _init
-    };
-
-})(document, jQuery);
-
-(function() {
-
-    'use strict';
-    app.init();
-
-})();
-
-angular.module("BoooksApp", [
+angular.module("AdminApp", [
     "ui.router",
     "LocalStorageModule",
     "vr.directives.nlForm"
 ]).config(function($stateProvider, $urlRouterProvider) {
-    $stateProvider
-        .state("featured", {
-            url: "/featured",
-            templateUrl: "/static/build/templates/index.html",
-            controller: "IndexController"
-        })
+    $stateProvider.state("featured", {
+        url: "/admin",
+        templateUrl: "/static/build/templates/admin.html",
+        controller: "AdminController"
+    });
     $urlRouterProvider.otherwise("featured");
-
 }).run(function($rootScope, $state, $templateCache, $http, localStorageService){
-    $rootScope.bongAuthToken = localStorageService.get("token");
     $rootScope.BASE_URL = "http://localhost:8000/"
     $rootScope.$state = $state;
     $rootScope.$on("$viewContentLoaded", function() {
         $templateCache.removeAll();
     });
-})
-    .controller("BoooksMainCtrl", function($scope, $http){
-    })
-    .controller("BoooksSearchController", function($scope, $http){
-        var controller = this;
-        this.filterMaxPrice = '5';
-        this.filterMaxMinutes = '120';
-        this.loading = true;
+}).controller("AdminMainCtrl", function($scope, $http){
+}).controller("AdminController", function($scope, $http){
+    var controller = this;
+    controller.categories = [];
+    controller.niches = [];
+    controller.keywords = [];
 
-        this.applyFilters = function(){
-            controller.filteredBooks = [];
-            controller.loading = true;
-            $http.post("http://localhost:8000/api/search", {niche_id: controller.chosenNicheID, category_id: controller.chosenCategoryID, max_price: controller.filterMaxPrice, max_pages: controller.filterMaxMinutes}).
-            success(function(data, status, headers, config) {
-                console.log("data: ", data);
-                controller.books = data;
-                controller.filteredBooks = data;
-                controller.loading = false;
-            }).
-            error(function(data, status, headers, config) {
-                console.log(data);
-                controller.loading = false;
-                controller.filteredBooks = false;
-            });
-        };
+    this.saveKeywords = function(keywords) {
+        $http.post("/api/keywords", {keywords: keywords}).success(function(data, status, headers, config) {
 
-        this.showModal = function(book){
-            this.currentBook = book;
-            $('#myModal').foundation('reveal', 'open');
-        };
-
-        $http.get("http://localhost:8000/api/index").success(function(data, status, headers, config) {
-            console.log("data: ", data);
-            controller.books = data;
-                controller.loading = false;
-            controller.filteredBooks = data;
-        }).
-        error(function(data, status, headers, config) {
-                controller.loading = false;
-            controller.filteredBooks = false;
+        }).error(function(data, status, headers, config) {
+            console.log(data)
         });
+    };
 
+    this.updateNiches = function() {
+        $http.get("http://localhost:8000/api/niches").success(function(data, status, headers, config) {
+            controller.niches = data;
+        }).error(function(data, status, headers, config) {
+            console.log(data)
+        });
+        controller.getKeywords();
+    };
+
+    this.updateCategories = function() {
+        $http.get("http://localhost:8000/api/categories").success(function(data, status, headers, config) {
+            controller.categories = data;
+        }).error(function(data, status, headers, config) {
+            console.log(data)
+        });
+        controller.getKeywords();
+    };
+
+    this.createCategory = (function(name){
+
+        $http.post("http://localhost:8000/api/categories", {name: name})
+            .success(function(data, status, headers, config) {
+                controller.categories = categories;
+            })
+            .error(function(data, status, headers, config) {
+                console.log(data)
+            });
+
+        controller.updateCategories();
     });
+    this.createNiche = (function(name){
+        $http.post("http://localhost:8000/api/niches", {name: name})
+            .success(function(data, status, headers, config) {
+                controller.niches = niches;
+            })
+            .error(function(data, status, headers, config) {
+                console.log(data)
+            });
+        controller.updateNiches();
+    });
+    this.deleteNiche = (function(id){
+        $http.delete("/api/niche/" + id, {name: name})
+            .error(function(data, status, headers, config) {
+                console.log(data)
+            });
+        controller.updateNiches();
+    });
+    this.deleteCategory = (function(id){
+        $http.delete("/api/category/" + id, {name: name})
+            .error(function(data, status, headers, config) {
+                console.log(data)
+            });
+        controller.updateCategories();
+    });
+    this.getKeywords = function(){
+        $http.get("/api/keywords")
+            .success(function(data, status, headers, config) {
+                controller.keywords = data;
+            })
+            .error(function(data, status, headers, config) {
+                console.log(data)
+            });
+    };
+    controller.updateNiches();
+    controller.updateCategories();
+
+    window.setTimeout(function(){
+        controller.updateNiches();
+        controller.updateCategories();
+        controller.getKeywords();
+    }, 1000);
+});

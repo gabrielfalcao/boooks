@@ -38,6 +38,8 @@
 - name: place alembic config
   template: src=alembic.ini dest="{{ application_path }}/alembic.ini"
     owner=root group=root mode=0644
+  tags:
+    - refresh
 
 - name: clear pyc files
   shell: find /srv/{{ application_name }} -name '*.pyc' -delete
@@ -71,6 +73,25 @@
 
 - name: build assets
   command: python manage.py assets build
+  environment:
+    VENV_PATH: "{{ virtualenv_path }}"
+    HOST: "{{ domain }}"
+    REDIS_URI: "{{ REDIS_URI }}"
+    PORT: "80"
+    SQLALCHEMY_DATABASE_URI: "{{ SQLALCHEMY_DATABASE_URI }}"
+    DOMAIN: "{{ domain }}"
+    PATH: "{{ virtualenv_path }}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    PYTHONPATH: "/srv/propellrapi/src:{{ virtualenv_path }}/lib/python2.7/site-packages:$PYTHONPATH"
+    PYTHONDONTWRITEBYTECODE: "x"
+    STATIC_BASE_URL: "http://{{ domain }}/static/build"
+  args:
+    chdir: "{{ application_path }}"
+  tags:
+    - refresh
+
+
+- name: run alembic
+  command: alembic upgrade head
   environment:
     VENV_PATH: "{{ virtualenv_path }}"
     HOST: "{{ domain }}"

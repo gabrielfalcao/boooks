@@ -53,6 +53,7 @@ static:
 	python manage.py assets build
 
 deploy:
+	git sync
 	cd deploy && floresta vpcs/boooks.yml --yes --inventory-path="inventory" --ansible -vvvv --tags=refresh -M library -u ubuntu --extra-vars='{"github_token":"$(GITHUB_TOKEN)"}'
 
 

@@ -10,14 +10,12 @@ from collections import defaultdict
 from boooks.framework.http import (
     Api,
     json_response,
-    JSONNotFound,
     JSONException,
     JSONResource,
 )
 
 from boooks import settings
-from boooks.framework.handy.functions import get_ip
-from boooks.web.models import Book
+from boooks.web.models import Book, SearchCategory, SearchNiche, CategoryKeywords
 from flask import (
     Blueprint,
     render_template,
@@ -57,7 +55,14 @@ def inject_basics():
 @module.route('/')
 def index():
     search_for_books('Best Seller')
-    return render_template('index.html')
+    labeled_niches = json.dumps([{'value': n.id, 'label': n.name} for n in SearchNiche.all()])
+    labeled_categories = json.dumps([{'value': n.id, 'label': n.name} for n in SearchCategory.all()])
+    return render_template('index.html', niches=labeled_niches, categories=labeled_categories)
+
+
+@module.route('/admin')
+def admin():
+    return render_template('admin.html')
 
 
 @module.route('/reading-lists')
@@ -125,11 +130,21 @@ class IndexResource(ApiResource):
 class SearchResource(ApiResource):
     def post(self):
         data = self.parse_json_fields([
-            'keywords',
+            'niche_id',
+            'category_id',
             'max_price',
             'max_pages',
         ])
 
+        niche_id = data.pop('niche_id')
+        category_id = data.pop('category_id')
+
+        keywords = CategoryKeywords.find_one_by(
+            search_niche_id=niche_id,
+            search_category_id=category_id
+        )
+
+        data['keywords'] = keywords.keywords
         books = search_for_books(**data)
 
         for item in books:
@@ -138,11 +153,84 @@ class SearchResource(ApiResource):
         return json_response(books, 200)
 
 
+class AdminListCategories(ApiResource):
+    def get(self):
+        categories = [c.to_dict() for c in SearchCategory.all()]
+        return json_response(categories, 200)
+
+    def post(self):
+        data = self.parse_json_fields([
+            'name',
+        ])
+        result = SearchCategory.get_or_create_from_name(data['name'])
+        CategoryKeywords.create_missing()
+        return json_response(result.to_dict(), 200)
+
+
+class AdminListNiches(ApiResource):
+    def get(self):
+        niches = [n.to_dict() for n in SearchNiche.all()]
+        return json_response(niches, 200)
+
+    def post(self):
+        data = self.parse_json_fields([
+            'name',
+        ])
+        result = SearchNiche.get_or_create_from_name(data['name'])
+        CategoryKeywords.create_missing()
+        return json_response(result.to_dict(), 200)
+
+
+class AdminNiches(ApiResource):
+    def delete(self, id):
+        result = SearchNiche.find_one_by(id=id)
+        result.delete()
+        return json_response(result.to_dict(), 200)
+
+
+class AdminCategories(ApiResource):
+    def delete(self, id):
+        result = SearchCategory.find_one_by(id=id)
+        result.delete()
+        return json_response(result.to_dict(), 200)
+
+
+class AdminKeywords(ApiResource):
+    def get(self):
+        results = CategoryKeywords.all()
+        return json_response([c.to_dict() for c in results], 200)
+
+    def post(self):
+        data = self.parse_json_fields([
+            'possibilities',
+        ])
+        possibilities = data['possibilities']
+        results = []
+        for p in possibilities:
+            r = CategoryKeywords.get_or_create(
+                search_niche_id=p['niche']['id'],
+                search_category_id=p['category']['id'],
+            )
+            keywords = p.get('keywords', '') or ''
+            r.update(keywords=keywords)
+            r.save()
+
+            results.append(r.to_dict())
+
+        return json_response(results, 200)
+
+
 ENDPOINTS = [
     # index
     (IndexResource, '/api/index'),
     # search
     (SearchResource, '/api/search'),
+    # admin niches
+    (AdminListNiches, '/api/niches'),
+    (AdminListCategories, '/api/categories'),
+    (AdminNiches, '/api/niche/<int:id>'),
+    (AdminCategories, '/api/category/<int:id>'),
+    (AdminKeywords, '/api/keywords'),
 ]
 
 

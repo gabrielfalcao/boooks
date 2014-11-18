@@ -49,8 +49,6 @@ angular.module("BoooksApp", [
     })
     .controller("BoooksSearchController", function($scope, $http){
         var controller = this;
-        this.filterKind = 'popular';
-        this.filterAbout = 'art & design';
         this.filterMaxPrice = '5';
         this.filterMaxMinutes = '120';
         this.loading = true;
@@ -58,7 +56,7 @@ angular.module("BoooksApp", [
         this.applyFilters = function(){
             controller.filteredBooks = [];
             controller.loading = true;
-            $http.post("{{ settings.absurl('/api/search') }}", {keywords: [controller.filterKind, controller.filterAbout].join(' '), max_price: controller.filterMaxPrice, max_pages: controller.filterMaxMinutes}).
+            $http.post("{{ settings.absurl('/api/search') }}", {niche_id: controller.chosenNicheID, category_id: controller.chosenCategoryID, max_price: controller.filterMaxPrice, max_pages: controller.filterMaxMinutes}).
             success(function(data, status, headers, config) {
                 console.log("data: ", data);
                 controller.books = data;

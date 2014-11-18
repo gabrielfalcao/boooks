@@ -55,10 +55,30 @@ def upgrade():
         db.Column('total_reviews', db.Integer),
         DefaultForeignKey('author_id', 'book_author.id')
     )
-
-
+    op.create_table(
+        'search_category',
+        PrimaryKey(),
+        db.Column('name', db.Unicode(20)),
+        db.Column('slug', db.Unicode(20)),
+    )
+    op.create_table(
+        'search_niche',
+        PrimaryKey(),
+        db.Column('name', db.Unicode(20)),
+        db.Column('slug', db.Unicode(20)),
+    )
+    op.create_table(
+        'search_keywords',
+        PrimaryKey(),
+        DefaultForeignKey('search_niche_id', 'search_niche.id', nullable=True),
+        DefaultForeignKey('search_category_id', 'search_category.id', nullable=True),
+        db.Column('keywords', db.Unicode(255)),
+    )
 
 
 def downgrade():
     op.drop_table('book')
     op.drop_table('book_author')
+    op.drop_table('search_category')
+    op.drop_table('search_niche')
+    op.drop_table('search_keywords')

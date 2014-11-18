@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import re
+
 from boooks.framework.db import (
     Model, db, MetaData,
     PrimaryKey,
@@ -12,7 +12,18 @@ from boooks.framework.handy.functions import slugify
 metadata = MetaData()
 
 
-class Author(Model):
+class SlugModel(Model):
+    @classmethod
+    def get_or_create_from_name(cls, name):
+        name = unicode(name)
+        slug = slugify(name)
+        found = cls.get_or_create(slug=slug)
+        found.name = name
+        found.save()
+        return found
+
+
+class Author(SlugModel):
     table = db.Table(
         'book_author',
         metadata,
@@ -20,14 +31,6 @@ class Author(Model):
         db.Column('name', db.Unicode(255)),
         db.Column('slug', db.Unicode(255)),
     )
-
-    @classmethod
-    def get_or_create_by_name(cls, name):
-        slug = slugify(name)
-        found = cls.get_or_create(slug=slug)
-        found.name = name
-        found.save()
-        return found
 
 
 class Book(Model):
@@ -50,7 +53,7 @@ class Book(Model):
 
     @classmethod
     def get_or_create_from_dict(cls, data):
-        author = Author.get_or_create_by_name(data['author'])
+        author = Author.get_or_create_from_name(data['author'])
         cleaned = {}
         cleaned['ASIN'] = data['ASIN']
         cleaned['ISBN'] = data['ISBN']
@@ -71,3 +74,77 @@ class Book(Model):
         found.update(**cleaned)
         found.save()
         return found
+
+
+class SearchCategory(SlugModel):
+    table = db.Table(
+        'search_category',
+        metadata,
+        PrimaryKey(),
+        db.Column('name', db.Unicode(20)),
+        db.Column('slug', db.Unicode(20)),
+    )
+
+    def get_keywords(self):
+        return CategoryKeywords.find_by(search_category_id=self.id)
+
+
+class SearchNiche(SlugModel):
+    table = db.Table(
+        'search_niche',
+        metadata,
+        PrimaryKey(),
+        db.Column('name', db.Unicode(20)),
+        db.Column('slug', db.Unicode(20)),
+    )
+
+
+class CategoryKeywords(Model):
+    table = db.Table(
+        'search_keywords',
+        metadata,
+        PrimaryKey(),
+        DefaultForeignKey('search_niche_id', 'search_niche.id', nullable=True),
+        DefaultForeignKey('search_category_id', 'search_category.id', nullable=True),
+        db.Column('keywords', db.Unicode(255)),
+    )
+
+    def to_dict(self):
+        data = self.serialize()
+        data['category'] = self.category.to_dict()
+        data['niche'] = self.niche.to_dict()
+        return data
+
+    @classmethod
+    def create_missing(cls):
+        for category in SearchCategory.all():
+            found = cls.get_or_create(
+                search_category_id=category.id,
+            )
+            if not found.keywords:
+                found.keywords = category.name
+                found.save()
+
+            for niche in SearchNiche.all():
+                found = cls.get_or_create(
+                    search_niche_id=niche.id,
+                )
+                if not found.keywords:
+                    found.keywords = niche.name
+                    found.save()
+
+                found = cls.get_or_create(
+                    search_category_id=category.id,
+                    search_niche_id=niche.id,
+                )
+                if not found.keywords:
+                    found.keywords = ' + '.join([niche.name, category.name])
+                    found.save()
+
+    @property
+    def category(self):
+        return SearchCategory.find_one_by(id=self.search_category_id)
+
+    @property
+    def niche(self):
+        return SearchNiche.find_one_by(id=self.search_niche_id)

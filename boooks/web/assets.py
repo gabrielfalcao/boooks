@@ -44,12 +44,15 @@ templates_node = Node(settings.LOCAL_FILE('static/js/templates'))
 nodes = templates_node.find_with_regex("[.]html$")
 
 booksapp = Bundle('js/app*.js', filters=[JINJA_FILTER])
+adminapp = Bundle('js/admin*.js', filters=[JINJA_FILTER])
 
 BUNDLES = [
     ('css-web', Bundle(web_less,
                        output='build/boooks.css')),
     ('app-js', Bundle(angular, booksapp,
                       output='build/boooks.js')),
+    ('admin-js', Bundle(angular, adminapp,
+                        output='build/admin.js')),
 
 ]
 
