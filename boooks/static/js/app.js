@@ -26,9 +26,7 @@ var app = (function(document, $) {
 
 angular.module("BoooksApp", [
     "ui.router",
-    "ngAnimate",
     "LocalStorageModule",
-    'angular-loading-bar',
     "vr.directives.nlForm"
 ]).config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
@@ -39,10 +37,7 @@ angular.module("BoooksApp", [
         })
     $urlRouterProvider.otherwise("featured");
 
-}).config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
-    cfpLoadingBarProvider.includeSpinner = true;
-    cfpLoadingBarProvider.includeBar = true;
-}]).run(function($rootScope, $state, $templateCache, $http, localStorageService){
+}).run(function($rootScope, $state, $templateCache, $http, localStorageService){
     $rootScope.bongAuthToken = localStorageService.get("token");
     $rootScope.BASE_URL = "{{ settings.absurl("/") }}"
     $rootScope.$state = $state;
@@ -52,7 +47,7 @@ angular.module("BoooksApp", [
 })
     .controller("BoooksMainCtrl", function($scope, $http){
     })
-    .controller("BoooksSearchController", function($scope, $http, cfpLoadingBar){
+    .controller("BoooksSearchController", function($scope, $http){
         var controller = this;
         this.chosenNicheID = 1;
         this.chosenCategoryID = 1;
@@ -60,7 +55,6 @@ angular.module("BoooksApp", [
         this.filterMaxMinutes = '900';
         this.loading = true;
 
-        cfpLoadingBar.start();
         this.applyFilters = function(){
             controller.filteredBooks = [];
             controller.loading = true;

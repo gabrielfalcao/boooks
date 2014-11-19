@@ -37,4 +37,3 @@ webassets==0.8
 webassets-recess==0.0.0
 wheel==0.24.0
 wsgiref==0.1.2
-Goodreads==0.1.2
