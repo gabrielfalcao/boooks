@@ -9,13 +9,6 @@
 - name: install npm dependencies
   shell: npm instal -g bower
 
-- name: install bower dependencies
-  shell: bower install --allow-root
-  args:
-    chdir: "{{ application_path }}"
-  tags:
-    - refresh
-
 - name: upload the deploy key for boooks
   command: github-tool --token={{ github_token }} add --project-name=boooks --key-title="{{ ansible_hostname }}-boooks" --key-file=/root/.ssh/{{ ansible_hostname }}-boooks-rsa.pub
   tags:
@@ -26,6 +19,13 @@
        dest="{{ application_path }}" accept_hostkey=True
        version="{{ repository_version }}"
        key_file=/root/.ssh/{{ ansible_hostname }}-boooks-rsa
+  tags:
+    - refresh
+
+- name: install bower dependencies
+  shell: bower install -f --allow-root
+  args:
+    chdir: "{{ application_path }}"
   tags:
     - refresh
 

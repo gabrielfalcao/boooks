@@ -79,3 +79,7 @@ FONT_AWESOME_PATH = '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/'
 COMPASS_OPTIONS = {
     'project_path': LOCAL_FILE('boooks/static/')
 }
+
+
+GOODREADS_KEY = 'LK0I7g0iQZnO12Op4oCg'
+GOODREADS_SECRET = 'Vkbg9syDVZiwmCxPGoVgwXuJI7yV7eH1HwleoVKU0'

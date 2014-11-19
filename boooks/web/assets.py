@@ -46,8 +46,12 @@ nodes = templates_node.find_with_regex("[.]html$")
 booksapp = Bundle('js/app*.js', filters=[JINJA_FILTER])
 adminapp = Bundle('js/admin*.js', filters=[JINJA_FILTER])
 
+angular_css = Bundle(
+    'vendor/angular-loading-bar/build/loading-bar.css'
+)
+
 BUNDLES = [
-    ('css-web', Bundle(web_less,
+    ('css-web', Bundle(angular_css, web_less,
                        output='build/boooks.css')),
     ('app-js', Bundle(angular, booksapp,
                       output='build/boooks.js')),
