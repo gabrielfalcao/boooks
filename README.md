@@ -13,6 +13,22 @@ mkvirtualenv boooks  # create a virtual env
 pip install -r development.txt  # install project dependencies (local, because are only used by this project)
 ```
 
+## Prepare the database
+
+1. Ensure that mysql is running
+
+```bash
+brew info mysql
+```
+Then follow the instructions to run mysql
+
+2. Prepare the database before running `make run`
+
+```bash
+make db
+```
+
+
 ## Building assets and running the project
 
 ```bash

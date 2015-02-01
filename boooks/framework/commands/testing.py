@@ -35,8 +35,8 @@ class RunTest(Command):  # pragma: no cover
         args = [
             '--immediate',
             '--with-coverage',
-            '--cover-min-percentage=100%',
             '--cover-erase',
+            '--cover-package=boooks.web',
             '--cover-package=boooks.api',
             '--cover-package=boooks.mail',
             '--cover-package=boooks.security',

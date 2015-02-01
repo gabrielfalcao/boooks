@@ -49,7 +49,7 @@ prod-simulation:
        PYTHONPATH=`pwd` PORT="4000" DOMAIN="0.0.0.0" REDIS_URI="redis://localhost:6379" gunicorn --worker-class boooks.upstream.WebsocketsSocketIOWorker boooks.server:application
 
 static:
-	bower install -f
+	bower install
 	python manage.py assets build
 
 deploy:
